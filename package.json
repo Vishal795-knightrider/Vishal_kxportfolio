@@ -1,0 +1,16 @@
+{
+  "name": "vishal-kashyap-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Personal developer portfolio for Vishal Kashyap — Full Stack Developer.",
+  "author": "Vishal Kashyap",
+  "license": "UNLICENSED",
+  "scripts": {
+    "dev": "serve . -l 3000",
+    "start": "serve . -l 3000",
+    "build": "node -e \"console.log('Static site — no build step required. The contents of this folder ARE the production build. Deploy the folder as-is (see README.md).')\""
+  },
+  "devDependencies": {
+    "serve": "^14.2.1"
+  }
+}
