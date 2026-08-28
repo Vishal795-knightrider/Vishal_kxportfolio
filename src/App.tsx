@@ -25,12 +25,12 @@ export const App: React.FC = () => {
     }
   }, [isLight]);
 
-  // Sync keyboard shortcuts (e.g. Cmd+K or Ctrl+K hint)
+  // ⌘K hint — reserved for future command palette
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
         e.preventDefault();
-        alert("Keyboard shortcut pressed! CMD+K is configured for navigation search.");
+        // future: open command palette
       }
     };
     window.addEventListener('keydown', handleKeyDown);

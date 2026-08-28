@@ -15,6 +15,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   setIsMenuOpen,
 }) => {
   const [time, setTime] = useState('00:00:00');
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     const tick = () => {
@@ -27,13 +28,19 @@ export const Navbar: React.FC<NavbarProps> = ({
     return () => clearInterval(intervalId);
   }, []);
 
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 12);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-    <header>
-      <nav>
+    <header className="nav-outer">
+      <div className={`nav-pill${scrolled ? ' nav-pill--scrolled' : ''}`}>
         <a href="#" className="logo">
           <span className="dot"></span>vishal.dev
         </a>
-        
+
         <div className="nav-mid">
           <div className="nav-links">
             <a href="#about">about</a>
@@ -46,15 +53,12 @@ export const Navbar: React.FC<NavbarProps> = ({
         </div>
 
         <div className="nav-right">
-          <span className="clock" id="clock">
-            {time}
-          </span>
+          <span className="clock" id="clock">{time}</span>
           <button
             className="theme-btn"
             id="themeBtn"
             aria-label="Toggle theme"
             onClick={() => setIsLight(!isLight)}
-            style={{ cursor: 'pointer' }}
           >
             {isLight ? (
               <Sun size={13} strokeWidth={1.6} />
@@ -62,7 +66,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <Moon size={13} strokeWidth={1.6} />
             )}
           </button>
-          
+
           <button
             className="nav-toggle"
             id="navToggle"
@@ -70,17 +74,17 @@ export const Navbar: React.FC<NavbarProps> = ({
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             {isMenuOpen ? (
-              <X size={19} strokeWidth={1.6} style={{ color: 'var(--text-primary)' }} />
+              <X size={19} strokeWidth={1.6} />
             ) : (
-              <div className="flex flex-col gap-[5px]">
-                <span className="w-[19px] h-[1.5px] bg-[var(--text-primary)] block"></span>
-                <span className="w-[19px] h-[1.5px] bg-[var(--text-primary)] block"></span>
-                <span className="w-[19px] h-[1.5px] bg-[var(--text-primary)] block"></span>
-              </div>
+              <>
+                <span></span>
+                <span></span>
+                <span></span>
+              </>
             )}
           </button>
         </div>
-      </nav>
+      </div>
     </header>
   );
 };
