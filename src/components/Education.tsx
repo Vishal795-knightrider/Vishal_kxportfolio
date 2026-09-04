@@ -3,24 +3,27 @@ import { education } from '../data/education';
 
 export const Education: React.FC = () => {
   return (
-    <>
-      <div className="eyebrow">
-        <span className="num">06</span> / Education
-      </div>
-      <h2 className="sec-title" style={{ marginBottom: '30px' }}>
-        Education.
-      </h2>
-      
-      {education.map((item, index) => (
-        <div className="ec-row" key={index}>
-          <div>
-            <div className="ec-name">{item.institution}</div>
-            <div className="ec-sub">{item.degree}</div>
-          </div>
-          <div className="ec-year">{item.year}</div>
+    <section className="education-section" id="education">
+      <div className="section-container">
+        <h2 className="section-title-serif">Education.</h2>
+
+        <div className="education-list">
+          {education.map((item, index) => (
+            <div className="education-item-row" key={index}>
+              <div className="edu-left-col">
+                <div className="edu-institution-name">{item.institution}</div>
+                <div className="edu-degree-text">{item.degree}</div>
+              </div>
+
+              <div className="edu-right-col">
+                <div className="edu-year-text">{item.year}</div>
+                <div className="edu-detail-text">{item.detail}</div>
+              </div>
+            </div>
+          ))}
         </div>
-      ))}
-    </>
+      </div>
+    </section>
   );
 };
 
