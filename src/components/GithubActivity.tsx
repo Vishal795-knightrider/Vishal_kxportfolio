@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 interface ContributionDay {
   date: string;
@@ -43,32 +43,99 @@ function buildGrid(days: ContributionDay[]) {
   const cells: (ContributionDay | null)[] = [];
   for (let i = 0; i < firstDow; i++) cells.push(null);
   days.forEach((d) => cells.push(d));
+
+  // Pad to ensure all columns have 7 days
+  while (cells.length % 7 !== 0) {
+    cells.push(null);
+  }
   return cells;
 }
 
-function buildMonths(cells: (ContributionDay | null)[], totalCols: number) {
-  const labels: string[] = [];
+function buildMonths(visibleCells: (ContributionDay | null)[], totalCols: number) {
+  const labels: string[] = Array(totalCols).fill('');
   let lastMonth = -1;
+  let lastLabelCol = -99;
+
   for (let c = 0; c < totalCols; c++) {
-    const colDays = cells.slice(c * 7, c * 7 + 7).filter(Boolean) as ContributionDay[];
-    let label = '';
-    if (colDays[0]) {
-      const dt = new Date(colDays[0].date + 'T00:00:00');
-      if (dt.getMonth() !== lastMonth) {
-        label = dt.toLocaleString('en-US', { month: 'short' });
-        lastMonth = dt.getMonth();
+    const colDays = visibleCells.slice(c * 7, c * 7 + 7).filter(Boolean) as ContributionDay[];
+    if (!colDays.length) continue;
+
+    if (c === 0) {
+      const firstDt = new Date(colDays[0].date + 'T00:00:00');
+      lastMonth = firstDt.getMonth();
+
+      // Look ahead: does month change in next 2 columns?
+      let changesSoon = false;
+      for (let nextC = 1; nextC <= Math.min(totalCols - 1, 2); nextC++) {
+        const nextDays = visibleCells.slice(nextC * 7, nextC * 7 + 7).filter(Boolean) as ContributionDay[];
+        if (nextDays.some((d) => new Date(d.date + 'T00:00:00').getMonth() !== lastMonth)) {
+          changesSoon = true;
+          break;
+        }
+      }
+
+      if (!changesSoon) {
+        labels[c] = firstDt.toLocaleString('en-US', { month: 'short' });
+        lastLabelCol = c;
+      }
+    } else {
+      const newMonthDay = colDays.find((d) => {
+        const dt = new Date(d.date + 'T00:00:00');
+        return dt.getMonth() !== lastMonth;
+      });
+
+      if (newMonthDay) {
+        const dt = new Date(newMonthDay.date + 'T00:00:00');
+        const month = dt.getMonth();
+        if (c - lastLabelCol >= 2 && c <= totalCols - 2) {
+          labels[c] = dt.toLocaleString('en-US', { month: 'short' });
+          lastLabelCol = c;
+        }
+        lastMonth = month;
       }
     }
-    labels.push(label);
   }
+
   return labels;
 }
 
 export const GithubActivity: React.FC = () => {
   const username = 'Vishal795-knightrider';
   const [totalContributions, setTotalContributions] = useState(446);
-  const [cells, setCells] = useState<(ContributionDay | null)[]>([]);
-  const [monthLabels, setMonthLabels] = useState<string[]>([]);
+  const [cells, setCells] = useState<(ContributionDay | null)[]>(() =>
+    buildGrid(generateFallbackContributions())
+  );
+
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [containerWidth, setContainerWidth] = useState<number>(() =>
+    typeof window !== 'undefined' ? Math.min(680, window.innerWidth - 80) : 680
+  );
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const updateWidth = () => {
+      const w = el.clientWidth;
+      if (w > 0) {
+        setContainerWidth(w);
+      }
+    };
+
+    updateWidth();
+
+    const observer = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const w = entry.contentRect.width;
+        if (w > 0) {
+          setContainerWidth(w);
+        }
+      }
+    });
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     let isMounted = true;
@@ -84,21 +151,14 @@ export const GithubActivity: React.FC = () => {
         if (isMounted) {
           const total = days.reduce((s: number, d: ContributionDay) => s + (d.count || 0), 0);
           setTotalContributions(total || 446);
-          const gridCells = buildGrid(days);
-          setCells(gridCells);
-          const totalCols = Math.ceil(gridCells.length / 7);
-          setMonthLabels(buildMonths(gridCells, totalCols));
+          setCells(buildGrid(days));
         }
       } catch {
-        // Graceful fallback with realistic contribution graph
         if (isMounted) {
           const fallbackDays = generateFallbackContributions();
           const total = fallbackDays.reduce((s, d) => s + d.count, 0);
           setTotalContributions(total || 446);
-          const gridCells = buildGrid(fallbackDays);
-          setCells(gridCells);
-          const totalCols = Math.ceil(gridCells.length / 7);
-          setMonthLabels(buildMonths(gridCells, totalCols));
+          setCells(buildGrid(fallbackDays));
         }
       }
     };
@@ -109,16 +169,28 @@ export const GithubActivity: React.FC = () => {
     };
   }, [username]);
 
-  const totalCols = Math.ceil(cells.length / 7) || 52;
+  // Calculate visible columns fitting container width
+  const totalAllCols = Math.ceil(cells.length / 7) || 52;
+  const colWidth = 10;
+  const colGap = 3;
+  const maxFittingCols = containerWidth > 0
+    ? Math.floor((containerWidth + colGap) / (colWidth + colGap))
+    : totalAllCols;
+  const visibleCols = Math.max(1, Math.min(totalAllCols, maxFittingCols));
+
+  // Slice to most recent columns that fit the length
+  const startCol = Math.max(0, totalAllCols - visibleCols);
+  const visibleCells = cells.slice(startCol * 7, (startCol + visibleCols) * 7);
+  const monthLabels = buildMonths(visibleCells, visibleCols);
 
   // Build grid column-wise
   const gridElements: React.ReactNode[] = [];
-  for (let c = 0; c < totalCols; c++) {
+  for (let c = 0; c < visibleCols; c++) {
     for (let r = 0; r < 7; r++) {
       const idx = c * 7 + r;
-      const cell = cells[idx];
+      const cell = visibleCells[idx];
       if (!cell) {
-        gridElements.push(<div key={`empty-${idx}`} className="gh-square-empty" />);
+        gridElements.push(<div key={`empty-${c}-${r}`} className="gh-square-empty" />);
       } else {
         const level = Math.min(4, Math.max(0, cell.level));
         const tooltip = `${cell.count} contribution${cell.count === 1 ? '' : 's'} on ${cell.date}`;
@@ -151,12 +223,12 @@ export const GithubActivity: React.FC = () => {
 
         {/* Heatmap Card */}
         <div className="gh-card">
-          <div className="gh-scroll-container">
+          <div className="gh-scroll-container" ref={containerRef}>
             <div className="gh-calendar-area">
               {/* Month Labels */}
               <div
                 className="gh-months-bar"
-                style={{ gridTemplateColumns: `repeat(${totalCols}, 1fr)` }}
+                style={{ gridTemplateColumns: `repeat(${visibleCols}, 10px)` }}
               >
                 {monthLabels.map((m, i) => (
                   <span key={i} className="gh-month-name">
@@ -168,7 +240,7 @@ export const GithubActivity: React.FC = () => {
               {/* Grid of contribution squares */}
               <div
                 className="gh-grid-cells"
-                style={{ gridTemplateColumns: `repeat(${totalCols}, 1fr)` }}
+                style={{ gridTemplateColumns: `repeat(${visibleCols}, 10px)` }}
               >
                 {gridElements}
               </div>

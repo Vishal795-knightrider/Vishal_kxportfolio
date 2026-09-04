@@ -1212,23 +1212,34 @@ body.dark .avatar-status-dot {
 }
 
 .gh-scroll-container {
-  overflow-x: auto;
-  padding-bottom: 6px;
+  overflow: hidden;
+  width: 100%;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.gh-scroll-container::-webkit-scrollbar {
+  display: none;
 }
 
 .gh-calendar-area {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  min-width: 640px;
+  width: fit-content;
+  max-width: 100%;
 }
 
 .gh-months-bar {
   display: grid;
+  grid-auto-flow: column;
+  gap: 3px;
   font-family: var(--mono);
   font-size: 0.68rem;
   color: var(--text-muted);
   margin-bottom: 2px;
+  height: 16px;
+  line-height: 16px;
 }
 
 .gh-month-name {
