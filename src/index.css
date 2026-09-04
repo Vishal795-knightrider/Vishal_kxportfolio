@@ -129,7 +129,7 @@ body::before {
   background-image: 
     linear-gradient(var(--bg-grid-line) 1px, transparent 1px),
     linear-gradient(90deg, var(--bg-grid-line) 1px, transparent 1px);
-  background-size: 38px 38px;
+  background-size: 48px 48px;
   background-position: center top;
 }
 
@@ -171,25 +171,6 @@ img {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-}
-
-/* Persistent vertical architectural guidelines */
-.page-grid-guides {
-  position: fixed;
-  inset: 0;
-  max-width: var(--container-width);
-  margin: 0 auto;
-  pointer-events: none;
-  z-index: 0;
-  display: flex;
-  justify-content: space-between;
-}
-
-.guide-line {
-  width: 1px;
-  height: 100%;
-  background-color: var(--border-subtle);
-  opacity: 0.8;
 }
 
 .section-container {

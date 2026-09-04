@@ -45,12 +45,6 @@ export const App: React.FC = () => {
 
   return (
     <div className="portfolio-app-root">
-      {/* Background Architectural Grid Lines & Border Guidelines */}
-      <div className="page-grid-guides" aria-hidden="true">
-        <div className="guide-line guide-left"></div>
-        <div className="guide-line guide-right"></div>
-      </div>
-
       <Navbar
         isLight={isLight}
         setIsLight={setIsLight}
