@@ -2,14 +2,51 @@ import React from 'react';
 
 export const About: React.FC = () => {
   return (
-    <section className="about band band-b" id="about">
-      <div className="wrap">
-        <div className="eyebrow">
-          <span className="num">01</span> / About
+    <section className="about-section" id="about">
+      <div className="section-container">
+        <h2 className="section-title-serif">About.</h2>
+
+        <div className="about-text-content">
+          <p>
+            Hey, I'm Vishal — a full stack developer from Ghaziabad who loves building clean, modern products where design, functionality, and even the smallest details matter. Most of what I know came from shipping: small React pages first, then MERN apps, then systems that had to stay in sync across many users at once.
+          </p>
+
+          <p>
+            Lately my work sits between two interests: full-stack product engineering and applied machine learning. On one side I'm wiring up APIs, databases and interfaces; on the other I'm working with text — similarity, scoring, and getting NLP models to say something genuinely useful.
+          </p>
+
+          <p>
+            I don't ship junk. Maintainability isn't optional. And I build best when I'm curious.
+          </p>
         </div>
-        <p>
-          I'm in my third year of a Computer Science degree, and most of my actual learning has happened in side projects rather than lecture halls. React and Next.js are where I'm most comfortable, with the rest of the MERN stack filling in the gaps — Node, Express, MongoDB — through shipping things end to end instead of following tutorials. The projects I keep coming back to have something harder underneath: matching resumes to job descriptions with NLP, or keeping a poll's vote count in sync in real time across a dozen tabs — backed by a DSA foundation I keep sharpening on the side.
-        </p>
+
+        {/* Developer Snapshot Card */}
+        <div className="dev-snapshot-card">
+          <div className="snapshot-label">DEVELOPER SNAPSHOT</div>
+          <div className="snapshot-grid">
+            <div className="snapshot-col">
+              <div className="snapshot-item">
+                <span className="snapshot-bullet">•</span>
+                <span>Building products.</span>
+              </div>
+              <div className="snapshot-item">
+                <span className="snapshot-bullet">•</span>
+                <span>Shipping consistently.</span>
+              </div>
+            </div>
+
+            <div className="snapshot-col">
+              <div className="snapshot-item">
+                <span className="snapshot-bullet">•</span>
+                <span>Learning technologies.</span>
+              </div>
+              <div className="snapshot-item">
+                <span className="snapshot-bullet">•</span>
+                <span>Obsessed with clean code.</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

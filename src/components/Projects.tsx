@@ -1,54 +1,58 @@
 import React, { useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { projects } from '../data/projects';
 import ProjectCard from './ProjectCard';
 
-type FilterType = 'all' | 'full stack' | 'frontend' | 'ai/ml';
+type FilterType = 'ALL' | 'Full Stack' | 'Frontend' | 'AI / ML';
 
 export const Projects: React.FC = () => {
-  const [activeFilter, setActiveFilter] = useState<FilterType>('all');
+  const [activeFilter, setActiveFilter] = useState<FilterType>('ALL');
 
   const filteredProjects = projects.filter((project) => {
-    if (activeFilter === 'all') return true;
-    return project.categories.includes(activeFilter);
+    if (activeFilter === 'ALL') return true;
+    if (activeFilter === 'Full Stack') return project.categories.includes('full stack');
+    if (activeFilter === 'Frontend') return project.categories.includes('frontend');
+    if (activeFilter === 'AI / ML') return project.categories.includes('ai/ml');
+    return true;
   });
 
+  const filters: FilterType[] = ['ALL', 'Full Stack', 'Frontend', 'AI / ML'];
+
   return (
-    <section className="projects band" id="projects">
-      <div className="wrap">
-        <div className="eyebrow">
-          <span className="num">02</span> / Projects
-        </div>
-        <div className="sec-head">
-          <div>
-            <h2 className="sec-title">Things I've built</h2>
-            <p className="sec-sub">
-              Two shipped, one in progress — no filler projects, no fake data.
-            </p>
-          </div>
-          <div className="segmented" id="filters">
-            {(['all', 'full stack', 'frontend', 'ai/ml'] as FilterType[]).map((filter) => (
+    <section className="projects-section" id="projects">
+      <div className="section-container">
+        {/* Header with Title and Filter Tabs */}
+        <div className="projects-header-row">
+          <h2 className="section-title-serif">Projects.</h2>
+
+          <div className="projects-filter-tabs" role="tablist">
+            {filters.map((filter) => (
               <button
                 key={filter}
-                className={activeFilter === filter ? 'active' : ''}
+                type="button"
+                role="tab"
+                aria-selected={activeFilter === filter}
+                className={`filter-tab-btn ${activeFilter === filter ? 'filter-tab-active' : ''}`}
                 onClick={() => setActiveFilter(filter)}
               >
-                {filter.charAt(0).toUpperCase() + filter.slice(1)}
+                {filter}
               </button>
             ))}
           </div>
         </div>
 
-        <motion.div layout className="proj-grid" id="projGrid">
+        {/* Projects Grid */}
+        <motion.div layout className="projects-grid">
           <AnimatePresence mode="popLayout">
             {filteredProjects.map((project) => (
               <motion.div
                 key={project.id}
                 layout
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.96 }}
                 transition={{ duration: 0.2 }}
+                className={`project-grid-item ${project.id === 'resonology-ai' ? 'project-item-full' : ''}`}
               >
                 <ProjectCard project={project} />
               </motion.div>

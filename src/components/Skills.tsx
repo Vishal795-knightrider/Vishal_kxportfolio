@@ -1,76 +1,59 @@
-import React, { useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import React from 'react';
 import { skills } from '../data/skills';
+import { Database, Network } from 'lucide-react';
 
-type SkillCategory = 'all' | 'lang' | 'front' | 'back' | 'db' | 'tools';
+// Custom icons for tools where skillicons might be unavailable or need custom rendering
+const renderToolIcon = (skill: typeof skills[0]) => {
+  if (skill.customIcon === 'api') {
+    return (
+      <span className="tool-icon-custom api-icon">
+        <Network size={14} />
+      </span>
+    );
+  }
+  if (skill.customIcon === 'database') {
+    return (
+      <span className="tool-icon-custom db-icon">
+        <Database size={14} />
+      </span>
+    );
+  }
+  if (skill.icon) {
+    return (
+      <img
+        src={`https://skillicons.dev/icons?i=${skill.icon}`}
+        alt={skill.name}
+        className="tool-icon-img"
+        loading="lazy"
+        onError={(e) => {
+          // Fallback if network issue
+          (e.target as HTMLElement).style.display = 'none';
+        }}
+      />
+    );
+  }
+  return null;
+};
 
 export const Skills: React.FC = () => {
-  const [activeFilter, setActiveFilter] = useState<SkillCategory>('all');
-
-  const filteredSkills = skills.filter((skill) => {
-    if (activeFilter === 'all') return true;
-    return skill.category === activeFilter;
-  });
-
-  const filterTabs: { label: string; value: SkillCategory }[] = [
-    { label: 'All', value: 'all' },
-    { label: 'Languages', value: 'lang' },
-    { label: 'Frontend', value: 'front' },
-    { label: 'Backend', value: 'back' },
-    { label: 'Databases', value: 'db' },
-    { label: 'Tools', value: 'tools' },
-  ];
-
   return (
-    <section className="skills band" id="skills">
-      <div className="wrap">
-        <div className="eyebrow">
-          <span className="num">04</span> / Tech Stack
+    <section className="skills-section" id="skills">
+      <div className="section-container">
+        {/* Header */}
+        <div className="skills-header-row">
+          <h2 className="section-title-serif">Tech Stack.</h2>
+          <span className="tools-counter-badge">{skills.length} TOOLS</span>
         </div>
-        <div className="sec-head">
-          <h2 className="sec-title">Tech Stack</h2>
-          <div className="segmented" id="skillFilters">
-            {filterTabs.map((tab) => (
-              <button
-                key={tab.value}
-                className={activeFilter === tab.value ? 'active' : ''}
-                onClick={() => setActiveFilter(tab.value)}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
+
+        {/* 20 Tools Pill Grid */}
+        <div className="skills-grid">
+          {skills.map((skill) => (
+            <div key={skill.name} className="skill-pill-card">
+              {renderToolIcon(skill)}
+              <span className="skill-pill-name">{skill.name}</span>
+            </div>
+          ))}
         </div>
-        
-        <motion.div layout className="skill-panel" id="skillPanel">
-          <AnimatePresence mode="popLayout">
-            {filteredSkills.map((skill) => {
-              const isHasIcon = !!skill.icon;
-              return (
-                <motion.span
-                  key={skill.name}
-                  layout
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  transition={{ duration: 0.15 }}
-                  className={`pill ${isHasIcon ? 'has-icon' : ''}`}
-                  data-cat={skill.category}
-                >
-                  {isHasIcon && (
-                    <img
-                      className="skill-icon"
-                      src={`https://skillicons.dev/icons?i=${skill.icon}`}
-                      alt={`${skill.name} icon`}
-                      loading="lazy"
-                    />
-                  )}
-                  {skill.name}
-                </motion.span>
-              );
-            })}
-          </AnimatePresence>
-        </motion.div>
       </div>
     </section>
   );
