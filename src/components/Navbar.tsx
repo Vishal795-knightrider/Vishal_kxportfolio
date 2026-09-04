@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Moon, Sun, X } from 'lucide-react';
+import { Moon, Sun, Search, Menu, X } from 'lucide-react';
 
 interface NavbarProps {
   isLight: boolean;
   setIsLight: (val: boolean) => void;
   isMenuOpen: boolean;
   setIsMenuOpen: (val: boolean) => void;
+  onOpenSearch: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -13,79 +14,73 @@ export const Navbar: React.FC<NavbarProps> = ({
   setIsLight,
   isMenuOpen,
   setIsMenuOpen,
+  onOpenSearch,
 }) => {
-  const [time, setTime] = useState('00:00:00');
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const tick = () => {
-      const d = new Date();
-      const pad = (n: number) => String(n).padStart(2, '0');
-      setTime(`${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`);
-    };
-    tick();
-    const intervalId = setInterval(tick, 1000);
-    return () => clearInterval(intervalId);
-  }, []);
-
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 12);
+    const handleScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
-    <header className="nav-outer">
-      <div className={`nav-pill${scrolled ? ' nav-pill--scrolled' : ''}`}>
-        <a href="#" className="logo">
-          <span className="dot"></span>vishal.dev
+    <header className={`nav-outer ${scrolled ? 'nav-outer--scrolled' : ''}`}>
+      <div className="nav-container">
+        {/* Brand Logo */}
+        <a href="#" className="brand-logo">
+          vishal<span className="brand-dot">.</span>
         </a>
 
-        <div className="nav-mid">
-          <div className="nav-links">
-            <a href="#about">about</a>
-            <a href="#projects">projects</a>
-            <a href="#experience">experience</a>
-            <a href="#skills">skills</a>
-            <a href="#contact">contact</a>
-          </div>
-          <div className="kbd-hint">⌘ K</div>
-        </div>
+        {/* Center Links */}
+        <nav className="nav-links-desktop" aria-label="Main Navigation">
+          <a href="#about" className="nav-link-item">about</a>
+          <a href="#projects" className="nav-link-item">projects</a>
+          <a href="#experience" className="nav-link-item">experience</a>
+          <a href="#github-activity" className="nav-link-item">github</a>
+          <a href="#education" className="nav-link-item">education</a>
+          <a href="#contact" className="nav-link-item">contact</a>
+        </nav>
 
-        <div className="nav-right">
-          <span className="clock" id="clock">{time}</span>
+        {/* Right Controls: Search + Theme Toggle */}
+        <div className="nav-actions">
           <button
-            className="theme-btn"
-            id="themeBtn"
-            aria-label="Toggle theme"
+            type="button"
+            className="nav-search-btn"
+            onClick={onOpenSearch}
+            title="Search sections & projects (Ctrl+K)"
+          >
+            <Search size={13} className="search-icon" />
+            <span className="search-text">Search</span>
+            <span className="search-kbd">Ctrl K</span>
+          </button>
+
+          <button
+            type="button"
+            className="theme-toggle-btn"
+            aria-label={isLight ? 'Switch to dark theme' : 'Switch to light theme'}
             onClick={() => setIsLight(!isLight)}
+            title={isLight ? 'Switch to dark mode' : 'Switch to light mode'}
           >
             {isLight ? (
-              <Sun size={13} strokeWidth={1.6} />
+              <Moon size={15} strokeWidth={1.8} />
             ) : (
-              <Moon size={13} strokeWidth={1.6} />
+              <Sun size={15} strokeWidth={1.8} />
             )}
           </button>
 
           <button
-            className="nav-toggle"
-            id="navToggle"
-            aria-label="Toggle menu"
+            type="button"
+            className="nav-mobile-toggle"
+            aria-label="Toggle navigation menu"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
-            {isMenuOpen ? (
-              <X size={19} strokeWidth={1.6} />
-            ) : (
-              <>
-                <span></span>
-                <span></span>
-                <span></span>
-              </>
-            )}
+            {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
       </div>
     </header>
   );
 };
+
 export default Navbar;

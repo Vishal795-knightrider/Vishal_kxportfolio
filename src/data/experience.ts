@@ -1,9 +1,8 @@
 export interface ExperienceItem {
   company: string;
   role: string;
-  type: string;
-  duration: string;
-  status: 'Completed' | 'Present' | string;
+  durationBadge: string;
+  verifyUrl?: string;
   bullets: string[];
   tags: string[];
 }
@@ -12,17 +11,16 @@ export const experience: ExperienceItem[] = [
   {
     company: 'IISPPR',
     role: 'Full Stack Developer Intern',
-    type: 'Internship',
-    duration: '3-Month Program',
-    status: 'Completed',
+    durationBadge: '3 Month Internship · Completed',
+    verifyUrl: 'https://iisppr.in',
     bullets: [
       'Built web applications using the MERN stack',
       'Developed responsive UI components',
       'Integrated backend APIs',
       'Collaborated on project tasks',
       'Improved debugging and deployment workflows',
-      'Gained hands-on full-stack development experience'
+      'Gained hands-on experience in full-stack development'
     ],
-    tags: ['MongoDB', 'Express.js', 'React.js', 'Node.js']
+    tags: ['React.js', 'Node.js', 'Express.js', 'MongoDB', 'Tailwind CSS']
   }
 ];

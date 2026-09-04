@@ -1,17 +1,18 @@
 export interface CertificationItem {
   title: string;
   issuer: string;
-  year?: string;
+  type?: string;
 }
 
 export const certifications: CertificationItem[] = [
   {
-    title: 'AWS Certified Cloud Practitioner',
-    issuer: 'Amazon Web Services · CLF-C02'
+    title: 'AWS Certified Cloud Practitioner (CLF-C02)',
+    issuer: 'Amazon Web Services',
+    type: 'aws'
   },
   {
     title: 'Networking Essentials',
-    issuer: 'Cisco Networking Academy',
-    year: 'Apr 2026'
+    issuer: 'Cisco Networking Academy · April 2024',
+    type: 'cisco'
   }
 ];

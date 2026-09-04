@@ -1,5 +1,6 @@
 import nlpPreview from '../assets/images/nlp-resume-scoring-preview.jpg';
 import pollifyPreview from '../assets/images/pollify-preview.jpg';
+import resonologyPreview from '../assets/images/resonology-preview.jpg';
 
 export interface Project {
   id: string;
@@ -11,11 +12,12 @@ export interface Project {
   badges: {
     status: 'live' | 'progress';
     statusText: string;
-    pillText: string;
+    pillText?: string;
     pillStyle?: React.CSSProperties;
   };
   image?: string;
   isMockPreview?: boolean;
+  notice?: string;
   details?: string[];
   tags: string[];
   links: {
@@ -30,13 +32,12 @@ export const projects: Project[] = [
   {
     id: 'nlp-resume-scoring',
     title: 'NLP Resume Scoring System',
-    year: '2026',
+    year: '2024',
     categories: ['ai/ml'],
-    description: 'Matches resumes against job descriptions using text-similarity algorithms and outputs a similarity score to speed up screening.',
+    description: 'An NLP-based resume scoring system that matches resumes with job descriptions using text similarity and generates similarity scores.',
     badges: {
       status: 'live',
-      statusText: 'Live',
-      pillText: 'Featured'
+      statusText: 'LIVE'
     },
     image: nlpPreview,
     details: [
@@ -53,13 +54,12 @@ export const projects: Project[] = [
   {
     id: 'pollify',
     title: 'Pollify',
-    year: '2025–26',
+    year: 'Aug 2025 - Jan 2026',
     categories: ['full stack', 'frontend'],
-    description: 'A real-time polling platform on Firebase — votes update instantly across every connected client, no page refresh needed.',
+    description: 'A real-time polling platform supporting instant vote updates and multiple concurrent users.',
     badges: {
       status: 'live',
-      statusText: 'Live',
-      pillText: 'Featured'
+      statusText: 'LIVE'
     },
     image: pollifyPreview,
     details: [
@@ -78,16 +78,16 @@ export const projects: Project[] = [
     title: 'Resonology AI',
     year: '2026',
     categories: ['ai/ml', 'full stack'],
-    tagline: 'AI-powered revenue operations & conversation intelligence platform',
-    description: 'Early-stage build — no public repo or demo yet, so nothing to link to just yet.',
+    description: 'AI-Powered Revenue Operations & Conversation Intelligence Platform. Currently in progress — the preview below is a concept mockup, not a shipped interface.',
     badges: {
       status: 'progress',
-      statusText: 'Ongoing',
-      pillText: 'Concept Preview',
-      pillStyle: { color: 'var(--accent-bright)', borderColor: 'var(--accent-line)' }
+      statusText: 'IN PROGRESS',
+      pillText: 'CONCEPT PREVIEW'
     },
-    isMockPreview: true,
-    tags: ['In Progress'],
+    image: resonologyPreview,
+    isMockPreview: false,
+    notice: 'Links will be published when the project ships.',
+    tags: ['AI', 'Revenue Operations', 'Conversation Intelligence'],
     links: {
       githubMuted: true,
       githubMutedTitle: 'Not public yet'
