@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { experience } from '../data/experience';
-import { Building2, ExternalLink, Check, Copy } from 'lucide-react';
+import { Building2, Check, Copy } from 'lucide-react';
 
 export const Experience: React.FC = () => {
   const [copied, setCopied] = useState(false);

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Search, X, FolderGit2, Briefcase, Code, GraduationCap, Award, Mail, ExternalLink, Moon, Sun, ArrowRight } from 'lucide-react';
+import { Search, FolderGit2, Briefcase, Code, GraduationCap, Award, Mail, ExternalLink, Moon, Sun, ArrowRight } from 'lucide-react';
 
 interface CommandPaletteProps {
   isOpen: boolean;

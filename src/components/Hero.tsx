@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Mail, Clock, ArrowUpRight } from 'lucide-react';
+import { Mail, Clock } from 'lucide-react';
 import vishalAvatar from '../assets/images/vishal-avatar.jpg';
 
 // Minimal custom X icon

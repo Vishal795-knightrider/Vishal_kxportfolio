@@ -11,26 +11,31 @@ import Education from './components/Education';
 import Certifications from './components/Certifications';
 import ContactCTA from './components/ContactCTA';
 import Footer from './components/Footer';
+import CommandPalette from './components/CommandPalette';
 
 export const App: React.FC = () => {
-  const [isLight, setIsLight] = useState(false);
+  // Default to light mode matching the screenshot, with full dark mode support
+  const [isLight, setIsLight] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   // Sync body class with theme selection
   useEffect(() => {
     if (isLight) {
       document.body.classList.add('light');
+      document.body.classList.remove('dark');
     } else {
+      document.body.classList.add('dark');
       document.body.classList.remove('light');
     }
   }, [isLight]);
 
-  // ⌘K hint — reserved for future command palette
+  // Global ⌘K / Ctrl+K keyboard shortcut
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
         e.preventDefault();
-        // future: open command palette
+        setIsSearchOpen((prev) => !prev);
       }
     };
     window.addEventListener('keydown', handleKeyDown);
@@ -38,66 +43,95 @@ export const App: React.FC = () => {
   }, []);
 
   return (
-    <>
-      {/* Persistent column guidelines framing the content */}
-      <div className="col-guides"></div>
+    <div className="portfolio-app-root">
+      {/* Background Architectural Grid Lines & Border Guidelines */}
+      <div className="page-grid-guides" aria-hidden="true">
+        <div className="guide-line guide-left"></div>
+        <div className="guide-line guide-right"></div>
+      </div>
 
       <Navbar
         isLight={isLight}
         setIsLight={setIsLight}
         isMenuOpen={isMenuOpen}
         setIsMenuOpen={setIsMenuOpen}
+        onOpenSearch={() => setIsSearchOpen(true)}
       />
 
       <MobileMenu isOpen={isMenuOpen} setIsOpen={setIsMenuOpen} />
 
-      <main>
+      <main className="main-content-layout">
         {/* HERO */}
         <Hero />
 
-        <div className="hr"></div>
+        <div className="section-divider">
+          <span className="cross-mark">+</span>
+        </div>
 
         {/* ABOUT */}
         <About />
 
-        <div className="hr"></div>
+        <div className="section-divider">
+          <span className="cross-mark">+</span>
+        </div>
 
         {/* PROJECTS */}
         <Projects />
 
-        <div className="hr"></div>
+        <div className="section-divider">
+          <span className="cross-mark">+</span>
+        </div>
 
-        {/* EXPERIENCE */}
+        {/* WORK EXPERIENCE */}
         <Experience />
 
-        <div className="hr"></div>
+        <div className="section-divider">
+          <span className="cross-mark">+</span>
+        </div>
 
-        {/* SKILLS */}
+        {/* TECH STACK */}
         <Skills />
 
-        <div className="hr"></div>
+        <div className="section-divider">
+          <span className="cross-mark">+</span>
+        </div>
 
         {/* GITHUB ACTIVITY */}
         <GithubActivity />
 
-        <div className="hr"></div>
+        <div className="section-divider">
+          <span className="cross-mark">+</span>
+        </div>
 
-        {/* EDUCATION & CERTIFICATIONS */}
-        <section className="edu-certs band band-b" id="education">
-          <div className="wrap">
-            <Education />
-            <Certifications />
-          </div>
-        </section>
+        {/* EDUCATION */}
+        <Education />
 
-        <div className="hr"></div>
+        <div className="section-divider">
+          <span className="cross-mark">+</span>
+        </div>
 
-        {/* CONTACT */}
+        {/* CERTIFICATIONS */}
+        <Certifications />
+
+        <div className="section-divider">
+          <span className="cross-mark">+</span>
+        </div>
+
+        {/* CONTACT / HAVE AN IDEA? LET'S TALK */}
         <ContactCTA />
       </main>
 
+      {/* FOOTER */}
       <Footer />
-    </>
+
+      {/* COMMAND PALETTE MODAL */}
+      <CommandPalette
+        isOpen={isSearchOpen}
+        onClose={() => setIsSearchOpen(false)}
+        isLight={isLight}
+        setIsLight={setIsLight}
+      />
+    </div>
   );
 };
 
