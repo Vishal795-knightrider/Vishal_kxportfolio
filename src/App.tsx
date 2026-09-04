@@ -12,6 +12,7 @@ import Certifications from './components/Certifications';
 import ContactCTA from './components/ContactCTA';
 import Footer from './components/Footer';
 import CommandPalette from './components/CommandPalette';
+import SectionDivider from './components/SectionDivider';
 
 export const App: React.FC = () => {
   // Default to light mode matching the screenshot, with full dark mode support
@@ -64,58 +65,42 @@ export const App: React.FC = () => {
         {/* HERO */}
         <Hero />
 
-        <div className="section-divider">
-          <span className="cross-mark">+</span>
-        </div>
+        <SectionDivider />
 
         {/* ABOUT */}
         <About />
 
-        <div className="section-divider">
-          <span className="cross-mark">+</span>
-        </div>
+        <SectionDivider />
 
         {/* PROJECTS */}
         <Projects />
 
-        <div className="section-divider">
-          <span className="cross-mark">+</span>
-        </div>
+        <SectionDivider />
 
         {/* WORK EXPERIENCE */}
         <Experience />
 
-        <div className="section-divider">
-          <span className="cross-mark">+</span>
-        </div>
+        <SectionDivider />
 
         {/* TECH STACK */}
         <Skills />
 
-        <div className="section-divider">
-          <span className="cross-mark">+</span>
-        </div>
+        <SectionDivider />
 
         {/* GITHUB ACTIVITY */}
         <GithubActivity />
 
-        <div className="section-divider">
-          <span className="cross-mark">+</span>
-        </div>
+        <SectionDivider />
 
         {/* EDUCATION */}
         <Education />
 
-        <div className="section-divider">
-          <span className="cross-mark">+</span>
-        </div>
+        <SectionDivider />
 
         {/* CERTIFICATIONS */}
         <Certifications />
 
-        <div className="section-divider">
-          <span className="cross-mark">+</span>
-        </div>
+        <SectionDivider />
 
         {/* CONTACT / HAVE AN IDEA? LET'S TALK */}
         <ContactCTA />

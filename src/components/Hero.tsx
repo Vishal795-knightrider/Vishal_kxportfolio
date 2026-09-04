@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Mail, Clock } from 'lucide-react';
-import vishalAvatar from '../assets/images/vishal-avatar.jpg';
+import { Mail, Clock, MapPin } from 'lucide-react';
+import vishalAvatar from '../assets/images/vishal-profile.jpg';
 
 // Minimal custom X icon
 const XIcon: React.FC<{ size?: number }> = ({ size = 15 }) => (
@@ -28,7 +28,6 @@ export const Hero: React.FC = () => {
 
   useEffect(() => {
     const updateTime = () => {
-      // Calculate IST (UTC+5:30)
       const now = new Date();
       const istString = now.toLocaleTimeString('en-US', {
         timeZone: 'Asia/Kolkata',
@@ -48,52 +47,57 @@ export const Hero: React.FC = () => {
   return (
     <section className="hero-section" id="hero">
       <div className="section-container">
-        {/* Profile Header */}
-        <div className="hero-profile-row">
-          <div className="hero-avatar-wrapper">
+        {/* Profile Header matching reference photo 2 */}
+        <div className="hero-header-block">
+          <div className="hero-avatar-container">
             <img
               src={vishalAvatar}
               alt="Vishal Kashyap"
-              className="hero-avatar-img"
+              className="hero-avatar-circle"
             />
+            {/* Green status badge at bottom-right of avatar circle */}
+            <span className="avatar-status-dot" title="Online / Open to opportunities"></span>
           </div>
 
-          <div className="hero-profile-info">
-            <h1 className="hero-name">Vishal Kashyap</h1>
-            <p className="hero-role-sub">Full Stack Developer · CS student</p>
-            <a href="mailto:vk3293801@gmail.com" className="hero-email-link">
-              <Mail size={13} className="hero-email-icon" />
+          <div className="hero-info-container">
+            {/* Vishal Kashyap in serif font matching image 2 */}
+            <h1 className="hero-name-serif">Vishal Kashyap</h1>
+            <p className="hero-subtitle">Full Stack Developer · CS student</p>
+            <a href="mailto:vk3293801@gmail.com" className="hero-mail-link">
+              <Mail size={13} className="hero-mail-icon" />
               <span>vk3293801@gmail.com</span>
             </a>
           </div>
         </div>
 
-        {/* Bio Text */}
-        <p className="hero-bio">
+        {/* Bio Paragraph */}
+        <p className="hero-bio-paragraph">
           I build fast, thoughtful digital products—from full-stack and real-time web apps to useful NLP/AI systems. I care about clear interfaces, dependable backends, and code that remains easy to read.
         </p>
 
-        {/* Action Buttons & Social Icons */}
-        <div className="hero-actions-row">
-          <div className="hero-btns-group">
+        {/* Actions Row: Resume | View my work | Divider | Social icons */}
+        <div className="hero-actions-bar">
+          <div className="hero-text-actions">
             <a
               href="https://drive.google.com/file/d/1Xexample/view"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-primary-pill"
+              className="hero-action-link hero-action-bold"
             >
               Resume
             </a>
-            <a href="#projects" className="btn-secondary-pill">
+            <a href="#projects" className="hero-action-link">
               View my work
             </a>
           </div>
 
-          <div className="hero-socials-group">
+          <span className="hero-actions-divider" aria-hidden="true">|</span>
+
+          <div className="hero-social-icons">
             <a
               href="mailto:vk3293801@gmail.com"
-              className="social-icon-btn"
-              aria-label="Send email"
+              className="hero-social-link"
+              aria-label="Email"
               title="Email"
             >
               <Mail size={15} />
@@ -102,7 +106,7 @@ export const Hero: React.FC = () => {
               href="https://x.com/VishalxKodes"
               target="_blank"
               rel="noopener noreferrer"
-              className="social-icon-btn"
+              className="hero-social-link"
               aria-label="X Twitter"
               title="X"
             >
@@ -112,8 +116,8 @@ export const Hero: React.FC = () => {
               href="https://github.com/Vishal795-knightrider"
               target="_blank"
               rel="noopener noreferrer"
-              className="social-icon-btn"
-              aria-label="GitHub profile"
+              className="hero-social-link"
+              aria-label="GitHub"
               title="GitHub"
             >
               <GithubIcon size={15} />
@@ -122,8 +126,8 @@ export const Hero: React.FC = () => {
               href="https://www.linkedin.com/in/vishal-kashyap-aa8b43328/"
               target="_blank"
               rel="noopener noreferrer"
-              className="social-icon-btn"
-              aria-label="LinkedIn profile"
+              className="hero-social-link"
+              aria-label="LinkedIn"
               title="LinkedIn"
             >
               <LinkedinIcon size={15} />
@@ -131,24 +135,25 @@ export const Hero: React.FC = () => {
           </div>
         </div>
 
-        {/* Status & Location Dual Cards */}
-        <div className="hero-dual-cards">
-          <div className="hero-status-card">
-            <span className="card-label">STATUS</span>
-            <div className="card-content">
-              <span className="pulse-green-dot"></span>
-              <span className="status-text">Open to internships</span>
+        {/* Twin Cards matching image 2 */}
+        <div className="hero-twin-cards">
+          {/* Status Card */}
+          <div className="hero-card hero-card-status">
+            <span className="card-indicator-dot"></span>
+            <div className="card-text-group">
+              <span className="card-eyebrow">STATUS</span>
+              <span className="card-value">Open to internships</span>
             </div>
           </div>
 
-          <div className="hero-location-card">
-            <span className="card-label">GHAZIABAD, INDIA</span>
-            <div className="card-content">
-              <span className="location-clock">
-                {istTime || '12:28:48 IST'}
-              </span>
-              <Clock size={13} className="clock-icon" />
+          {/* Location & IST Clock Card */}
+          <div className="hero-card hero-card-location">
+            <MapPin size={16} className="card-pin-icon" />
+            <div className="card-text-group">
+              <span className="card-eyebrow">GHAZIABAD, INDIA</span>
+              <span className="card-value card-clock-val">{istTime || '13:37:44 IST'}</span>
             </div>
+            <Clock size={16} className="card-clock-icon" />
           </div>
         </div>
       </div>
