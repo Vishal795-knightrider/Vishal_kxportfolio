@@ -24,39 +24,8 @@ export const Navbar: React.FC<NavbarProps> = ({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleToggleTheme = (e: React.MouseEvent<HTMLButtonElement>) => {
-    // Check if View Transitions API is supported
-    if (typeof document !== 'undefined' && 'startViewTransition' in document) {
-      const rect = e.currentTarget.getBoundingClientRect();
-      const x = rect.left + rect.width / 2;
-      const y = rect.top + rect.height / 2;
-      const endRadius = Math.hypot(
-        Math.max(x, window.innerWidth - x),
-        Math.max(y, window.innerHeight - y)
-      );
-
-      const transition = (document as any).startViewTransition(() => {
-        setIsLight(!isLight);
-      });
-
-      transition.ready.then(() => {
-        document.documentElement.animate(
-          {
-            clipPath: [
-              `circle(0px at ${x}px ${y}px)`,
-              `circle(${endRadius}px at ${x}px ${y}px)`,
-            ],
-          },
-          {
-            duration: 450,
-            easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
-            pseudoElement: '::view-transition-new(root)',
-          }
-        );
-      });
-    } else {
-      setIsLight(!isLight);
-    }
+  const handleToggleTheme = () => {
+    setIsLight(!isLight);
   };
 
   return (
@@ -100,7 +69,6 @@ export const Navbar: React.FC<NavbarProps> = ({
             <span className="theme-switch-track" aria-hidden="true">
               <span className="theme-switch-thumb" />
             </span>
-            <span className="theme-switch-text">{isLight ? 'light' : 'dark'}</span>
           </button>
 
           <button
