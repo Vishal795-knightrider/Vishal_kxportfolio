@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Clock, MapPin } from 'lucide-react';
 import vishalAvatar from '../assets/images/vishal-profile.jpg';
+import PixelName from './PixelName';
 
 // Minimal custom X icon
 const XIcon: React.FC<{ size?: number }> = ({ size = 15 }) => (
@@ -86,8 +87,8 @@ export const Hero: React.FC = () => {
           </motion.div>
 
           <div className="hero-info-container">
-            {/* Vishal Kashyap in serif font matching image 2 */}
-            <h1 className="hero-name-serif">Vishal Kashyap</h1>
+            {/* Pixel dot-matrix name matching user reference image 3 */}
+            <PixelName firstName="VISHAL" lastName="KASHYAP" />
             <p className="hero-subtitle">Full Stack Developer · CS student</p>
             <a href="mailto:vk3293801@gmail.com" className="hero-mail-link">
               <Mail size={13} className="hero-mail-icon" />

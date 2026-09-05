@@ -376,22 +376,75 @@ body.dark .nav-outer {
   color: var(--text-muted);
 }
 
-.theme-toggle-btn {
-  width: 32px;
-  height: 32px;
-  display: flex;
+/* Theme Pill Switch matching user reference image 2 */
+.theme-pill-switch {
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  border-radius: var(--radius-sm);
-  color: var(--text-secondary);
-  border: 1px solid var(--border);
-  background: var(--surface);
-  transition: all 0.15s ease;
+  gap: 8px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: var(--radius-full);
+  transition: opacity 0.15s ease;
+  user-select: none;
 }
 
-.theme-toggle-btn:hover {
+.theme-pill-switch:hover {
+  opacity: 0.88;
+}
+
+.theme-switch-track {
+  width: 44px;
+  height: 24px;
+  border-radius: 9999px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 3px;
+  transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  background-color: #e4e4e7;
+  border: 1px solid #d4d4d8;
+}
+
+body.dark .theme-switch-track {
+  background-color: #242426;
+  border: 1px solid #38383a;
+}
+
+.theme-switch-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.25s ease, box-shadow 0.25s ease;
+  background-color: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* Light mode: thumb on the left */
+.theme-pill--light .theme-switch-thumb {
+  transform: translateX(0);
+  background-color: #ffffff;
+}
+
+/* Dark mode: thumb on the right matching Image 2 */
+.theme-pill--dark .theme-switch-thumb {
+  transform: translateX(20px);
+  background-color: #121214;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.theme-switch-text {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-transform: lowercase;
+  letter-spacing: -0.01em;
+}
+
+.theme-pill-switch:hover .theme-switch-text {
   color: var(--text-primary);
-  border-color: var(--border-hover);
 }
 
 .nav-mobile-toggle {
@@ -486,6 +539,79 @@ body.dark .avatar-status-dot {
   letter-spacing: -0.015em;
   color: var(--text-primary);
   line-height: 1.15;
+}
+
+/* ==========================================================================
+   PIXEL DOT-MATRIX NAME (Matching User Image 3)
+   ========================================================================== */
+
+.pixel-name-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: 14px;
+  row-gap: 6px;
+  margin-bottom: 6px;
+  margin-top: 2px;
+  cursor: default;
+}
+
+.pixel-word {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.pixel-letter {
+  display: flex;
+  flex-direction: column;
+  gap: 1.8px;
+  transition: transform 0.15s ease;
+}
+
+.pixel-name-container:hover .pixel-letter {
+  transform: translateY(-1px);
+}
+
+.pixel-row {
+  display: flex;
+  gap: 1.8px;
+}
+
+.pixel-box {
+  width: 4px;
+  height: 4px;
+  border-radius: 0.5px;
+  flex-shrink: 0;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.pixel-box-on {
+  background-color: var(--text-primary);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
+}
+
+body.dark .pixel-box-on {
+  background-color: #ffffff;
+  box-shadow: 0 0 2px rgba(255, 255, 255, 0.4);
+}
+
+.pixel-box-off {
+  background-color: transparent;
+}
+
+@media (max-width: 640px) {
+  .pixel-box {
+    width: 3.2px;
+    height: 3.2px;
+  }
+  .pixel-row,
+  .pixel-letter {
+    gap: 1.2px;
+  }
+  .pixel-word {
+    gap: 3px;
+  }
 }
 
 .hero-subtitle {
@@ -1458,14 +1584,14 @@ body.dark .avatar-status-dot {
    ========================================================================== */
 
 .contact-cta-section {
-  padding: 30px 0 10px;
+  padding: 24px 0 0;
 }
 
 .contact-card {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 20px;
-  padding: 44px 32px;
+  padding: 38px 28px;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -1527,6 +1653,70 @@ body.dark .avatar-status-dot {
   background: var(--surface-hover);
 }
 
+/* Animated Contact Buttons matching user image 1 */
+.contact-pill-animated {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.contact-pill-animated::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -80%;
+  width: 50%;
+  height: 200%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.28), transparent);
+  transform: rotate(25deg);
+  pointer-events: none;
+  transition: none;
+}
+
+.contact-pill-animated:hover::after {
+  left: 150%;
+  transition: left 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.contact-pill-animated:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+body.dark .contact-pill-animated:hover {
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+}
+
+.contact-pill-mail {
+  box-shadow: 0 0 0 0 rgba(24, 24, 27, 0.4);
+  animation: mail-pulse 3s infinite ease-in-out;
+}
+
+@keyframes mail-pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+.arrow-animated {
+  display: inline-block;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.contact-pill-animated:hover .arrow-animated {
+  transform: translate(2.5px, -2.5px);
+}
+
+.mail-icon-animated {
+  transition: transform 0.2s ease;
+}
+
+.contact-pill-animated:hover .mail-icon-animated {
+  transform: scale(1.15);
+}
+
 .contact-pill-primary {
   background: var(--border-strong);
   color: var(--bg);
@@ -1540,24 +1730,26 @@ body.dark .avatar-status-dot {
 }
 
 /* ==========================================================================
-   FOOTER (Matches hand-drawn layout: Line 1 visitor [#no], Line 2 details)
+   FOOTER (Matches user image 1 layout: 1. You are visitor, 2. Open to..., 3. Designed...)
+   Reduced gap above to eliminate empty space where lines were drawn
    ========================================================================== */
 
 .site-footer {
-  margin-top: 48px;
-  padding: 32px 0 44px;
+  margin-top: 14px;
+  padding: 18px 0 32px;
   border-top: 1px solid var(--border);
   position: relative;
   z-index: 2;
 }
 
-.footer-container {
+.footer-container-stacked {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  align-items: flex-start;
+  gap: 10px;
 }
 
-/* Line 1: You're visitor [#no] */
+/* 1. First: You're visitor [#no] */
 .visitor-row {
   display: flex;
   align-items: center;
@@ -1625,20 +1817,8 @@ body.dark .avatar-status-dot {
   to { opacity: 1; transform: translate(-50%, 0) scale(1); }
 }
 
-/* Line 2: "add something here" (left) and "Designed & built" (right) */
-.footer-credits-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 14px;
-  font-size: 0.83rem;
-  color: var(--text-muted);
-  border-top: 1px dashed var(--border);
-  padding-top: 18px;
-}
-
-.footer-left-content {
+/* 2. Below: Open to opportunities */
+.footer-status-row {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -1682,8 +1862,10 @@ body.dark .avatar-status-dot {
   font-size: 0.78rem;
 }
 
-.footer-right-content {
-  font-size: 0.83rem;
+/* 3. Then after small space: Designed & built */
+.footer-credits-stacked {
+  margin-top: 2px;
+  font-size: 0.82rem;
   color: var(--text-muted);
 }
 
