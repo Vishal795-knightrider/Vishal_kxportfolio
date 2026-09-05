@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
 
 export const Footer: React.FC = () => {
   const [visitorCount, setVisitorCount] = useState<number>(52);
@@ -24,34 +23,34 @@ export const Footer: React.FC = () => {
 
   return (
     <footer className="site-footer">
-      <div className="section-container footer-container-boxes">
-        {/* Row 1: Centered Visitor Badge Box matching sketch */}
-        <div className="footer-visitor-center">
-          <motion.button
+      <div className="section-container footer-container-clean">
+        {/* Row 1: Centered Visitor Counter (Clean text, no box) */}
+        <div className="footer-visitor-row">
+          <button
             type="button"
-            className="visitor-center-box"
+            className="footer-visitor-clean-btn"
             onClick={handleBoxClick}
-            whileHover={{ scale: 1.04, y: -1 }}
-            whileTap={{ scale: 0.96 }}
             title="Click to celebrate!"
             aria-label={`Visitor number ${visitorCount}`}
           >
-            <span className="visitor-center-label">You're visitor</span>
-            <span className="visitor-boxed-number">#{visitorCount}</span>
+            <span className="footer-visitor-clean-label">You're visitor</span>
+            <span className="footer-visitor-clean-num">#{visitorCount}</span>
             {hasInteracted && <span className="visitor-toast">👋 Hello!</span>}
-          </motion.button>
+          </button>
         </div>
 
-        {/* Row 2: Two Boxes matching sketch: Left status box, Right credits box */}
-        <div className="footer-dual-boxes">
-          <div className="footer-box footer-box-left">
+        {/* Row 2: Status & Credits with no wide gap between them */}
+        <div className="footer-text-row">
+          <div className="footer-status-group">
             <span className="footer-live-dot"></span>
             <span className="footer-live-text">Open to internships &amp; opportunities</span>
             <span className="footer-sep-dash">•</span>
             <span className="footer-year">© {new Date().getFullYear()}</span>
           </div>
 
-          <div className="footer-box footer-box-right">
+          <span className="footer-mid-sep">•</span>
+
+          <div className="footer-credits-group">
             <span>Designed &amp; built by </span>
             <a href="#hero" className="footer-author-link">
               Vishal Kashyap

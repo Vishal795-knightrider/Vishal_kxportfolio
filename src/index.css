@@ -1771,78 +1771,58 @@ body.dark .contact-pill-animated:hover {
   z-index: 2;
 }
 
-.footer-container-boxes {
+.footer-container-clean {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14px;
+  gap: 10px;
   max-width: var(--container-width);
   margin: 0 auto;
+  text-align: center;
 }
 
-/* Row 1: Centered Visitor Badge Box directly beneath Have an idea? card */
-.footer-visitor-center {
+/* Row 1: Centered Visitor Counter (Clean text, no box) */
+.footer-visitor-row {
   display: flex;
   justify-content: center;
-  width: 100%;
+  align-items: center;
 }
 
-.visitor-center-box {
+.footer-visitor-clean-btn {
   position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 6px 14px;
-  background: var(--surface);
-  border: 1px solid var(--border);
+  gap: 6px;
+  background: transparent;
+  border: none;
+  padding: 2px 6px;
   border-radius: var(--radius-sm);
-  color: var(--text-primary);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  color: var(--text-muted);
   cursor: pointer;
   outline: none;
   font-family: var(--mono);
   font-size: 0.82rem;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: color 0.15s ease, background-color 0.15s ease;
 }
 
-.visitor-center-box:hover {
-  border-color: var(--border-hover);
-  background: var(--surface-hover);
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+.footer-visitor-clean-btn:hover {
+  color: var(--text-primary);
+  background: var(--surface-subtle);
 }
 
-body.dark .visitor-center-box {
-  background: #141416;
-  border-color: #27272a;
-}
-
-body.dark .visitor-center-box:hover {
-  border-color: #38383e;
-}
-
-.visitor-center-label {
-  font-weight: 500;
+.footer-visitor-clean-label {
   color: var(--text-muted);
 }
 
-.visitor-boxed-number {
+.footer-visitor-clean-num {
   font-weight: 700;
   color: var(--text-primary);
   font-variant-numeric: tabular-nums;
-  background: var(--bg-subtle);
-  padding: 1px 7px;
-  border-radius: 4px;
-  border: 1px solid var(--border-subtle);
-}
-
-body.dark .visitor-boxed-number {
-  background: #1e1e22;
-  border-color: #2e2e34;
 }
 
 .visitor-toast {
   position: absolute;
-  bottom: calc(100% + 8px);
+  bottom: calc(100% + 6px);
   left: 50%;
   transform: translateX(-50%);
   background: var(--text-primary);
@@ -1863,44 +1843,21 @@ body.dark .visitor-boxed-number {
   to { opacity: 1; transform: translate(-50%, 0) scale(1); }
 }
 
-/* Row 2: Dual Boxes Row matching sketch (Left status box, Right credits box) */
-.footer-dual-boxes {
+/* Row 2: Status & Credits with tight spacing and no wide gap */
+.footer-text-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  gap: 12px;
+  justify-content: center;
   flex-wrap: wrap;
-}
-
-.footer-box {
-  display: inline-flex;
-  align-items: center;
-  padding: 8px 16px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
+  gap: 10px;
   font-size: 0.82rem;
   color: var(--text-secondary);
-  box-shadow: var(--shadow-sm);
-  transition: border-color 0.2s ease, background-color 0.2s ease;
 }
 
-body.dark .footer-box {
-  background: #141416;
-  border-color: #26262a;
-}
-
-.footer-box:hover {
-  border-color: var(--border-hover);
-}
-
-body.dark .footer-box:hover {
-  border-color: #38383e;
-}
-
-.footer-box-left {
-  gap: 8px;
+.footer-status-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
 }
 
 .footer-live-dot {
@@ -1930,7 +1887,7 @@ body.dark .footer-box:hover {
 }
 
 .footer-sep-dash {
-  color: var(--border-hover);
+  color: var(--text-muted);
   font-size: 0.8rem;
 }
 
@@ -1940,12 +1897,19 @@ body.dark .footer-box:hover {
   font-size: 0.78rem;
 }
 
-.footer-box-right {
+.footer-mid-sep {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+.footer-credits-group {
+  display: inline-flex;
+  align-items: center;
   gap: 5px;
   color: var(--text-muted);
 }
 
-.footer-box-right .footer-author-link {
+.footer-credits-group .footer-author-link {
   font-weight: 600;
   color: var(--text-primary);
   text-decoration: none;
@@ -1953,19 +1917,18 @@ body.dark .footer-box:hover {
   transition: color 0.15s ease, border-bottom-color 0.15s ease;
 }
 
-.footer-box-right .footer-author-link:hover {
+.footer-credits-group .footer-author-link:hover {
   color: var(--text-primary);
   border-bottom-color: var(--text-primary);
 }
 
 @media (max-width: 640px) {
-  .footer-dual-boxes {
+  .footer-text-row {
     flex-direction: column;
-    align-items: stretch;
+    gap: 6px;
   }
-  .footer-box {
-    justify-content: center;
-    width: 100%;
+  .footer-mid-sep {
+    display: none;
   }
 }
 
