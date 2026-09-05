@@ -24,6 +24,41 @@ export const Navbar: React.FC<NavbarProps> = ({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const handleToggleTheme = (e: React.MouseEvent<HTMLButtonElement>) => {
+    // Check if View Transitions API is supported
+    if (typeof document !== 'undefined' && 'startViewTransition' in document) {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const x = rect.left + rect.width / 2;
+      const y = rect.top + rect.height / 2;
+      const endRadius = Math.hypot(
+        Math.max(x, window.innerWidth - x),
+        Math.max(y, window.innerHeight - y)
+      );
+
+      const transition = (document as any).startViewTransition(() => {
+        setIsLight(!isLight);
+      });
+
+      transition.ready.then(() => {
+        document.documentElement.animate(
+          {
+            clipPath: [
+              `circle(0px at ${x}px ${y}px)`,
+              `circle(${endRadius}px at ${x}px ${y}px)`,
+            ],
+          },
+          {
+            duration: 450,
+            easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+            pseudoElement: '::view-transition-new(root)',
+          }
+        );
+      });
+    } else {
+      setIsLight(!isLight);
+    }
+  };
+
   return (
     <header className={`nav-outer ${scrolled ? 'nav-outer--scrolled' : ''}`}>
       <div className="nav-container">
@@ -42,24 +77,24 @@ export const Navbar: React.FC<NavbarProps> = ({
           <a href="#contact" className="nav-link-item">contact</a>
         </nav>
 
-        {/* Right Controls: Search + Theme Toggle */}
+        {/* Right Controls: Compact Search + Pill Theme Toggle */}
         <div className="nav-actions">
           <button
             type="button"
             className="nav-search-btn"
             onClick={onOpenSearch}
-            title="Search sections & projects (Ctrl+K)"
+            title="Search sections & projects (⌘K)"
+            aria-label="Search sections & projects (⌘K)"
           >
             <Search size={13} className="search-icon" />
-            <span className="search-text">Search</span>
-            <span className="search-kbd">Ctrl K</span>
+            <span className="search-cmd-k">⌘K</span>
           </button>
 
           <button
             type="button"
             className={`theme-pill-switch ${isLight ? 'theme-pill--light' : 'theme-pill--dark'}`}
             aria-label={isLight ? 'Switch to dark theme' : 'Switch to light theme'}
-            onClick={() => setIsLight(!isLight)}
+            onClick={handleToggleTheme}
             title={`Switch to ${isLight ? 'dark' : 'light'} mode`}
           >
             <span className="theme-switch-track" aria-hidden="true">

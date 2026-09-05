@@ -340,40 +340,81 @@ body.dark .nav-outer {
   gap: 10px;
 }
 
+/* ==========================================================================
+   THEME CHANGE ANIMATION (Circular Ripple View Transition + Smooth Crossfade)
+   ========================================================================== */
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 9999;
+}
+
+/* Compact Search Button matching user image */
 .nav-search-btn {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 5px 10px;
+  justify-content: center;
+  gap: 6px;
+  padding: 4px 10px;
+  height: 28px;
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
+  border-radius: 8px;
   color: var(--text-muted);
-  font-size: 0.8rem;
-  transition: all 0.15s ease;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+body.dark .nav-search-btn {
+  background: #141416;
+  border-color: #26262a;
 }
 
 .nav-search-btn:hover {
   border-color: var(--border-hover);
   color: var(--text-primary);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+body.dark .nav-search-btn:hover {
+  border-color: #38383e;
+  background: #1a1a1d;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .search-icon {
   color: var(--text-muted);
+  transition: color 0.15s ease;
+  flex-shrink: 0;
 }
 
-.search-text {
-  font-size: 0.78rem;
+.nav-search-btn:hover .search-icon {
+  color: var(--text-primary);
 }
 
-.search-kbd {
+.search-cmd-k {
   font-family: var(--mono);
-  font-size: 0.68rem;
-  background: var(--bg-subtle);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: 1px 5px;
+  font-size: 0.74rem;
+  font-weight: 500;
   color: var(--text-muted);
+  letter-spacing: -0.01em;
+  line-height: 1;
+  transition: color 0.15s ease;
+}
+
+.nav-search-btn:hover .search-cmd-k {
+  color: var(--text-primary);
 }
 
 /* Theme Pill Switch matching user reference image 2 */
