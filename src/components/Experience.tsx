@@ -1,48 +1,36 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { motion } from 'framer-motion';
 import { experience } from '../data/experience';
-import { Building2, Check, Copy } from 'lucide-react';
+import { Building2 } from 'lucide-react';
 
 export const Experience: React.FC = () => {
-  const [copied, setCopied] = useState(false);
-
-  const handleCopyName = () => {
-    navigator.clipboard.writeText('IISPPR');
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
   return (
-    <section className="experience-section" id="experience">
+    <motion.section
+      className="experience-section"
+      id="experience"
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+    >
       <div className="section-container">
         {/* Section Header */}
         <div className="experience-header-row">
           <h2 className="section-title-serif">Work Experience.</h2>
-
-          <div className="experience-top-links">
-            <a
-              href="https://iisppr.in"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="exp-header-link"
-            >
-              VERIFY ON IISPRR.IN <span className="arrow">↗</span>
-            </a>
-            <button
-              type="button"
-              className="exp-copy-btn"
-              onClick={handleCopyName}
-              title="Copy company name"
-            >
-              {copied ? <Check size={12} /> : <Copy size={12} />}
-              <span>{copied ? 'Copied!' : 'Copy name'}</span>
-            </button>
-          </div>
         </div>
 
         {/* Experience Cards */}
         <div className="experience-list">
           {experience.map((item, index) => (
-            <div className="experience-card" key={index}>
+            <motion.div
+              className="experience-card"
+              key={index}
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.45 }}
+              whileHover={{ y: -2 }}
+            >
               {/* Top Row: Company & Duration Badge */}
               <div className="exp-card-top">
                 <div className="exp-company-group">
@@ -78,11 +66,11 @@ export const Experience: React.FC = () => {
                   </span>
                 ))}
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 
