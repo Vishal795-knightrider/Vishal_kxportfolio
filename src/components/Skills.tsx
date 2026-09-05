@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { skills } from '../data/skills';
 import { Database, Network } from 'lucide-react';
 
@@ -37,7 +38,14 @@ const renderToolIcon = (skill: typeof skills[0]) => {
 
 export const Skills: React.FC = () => {
   return (
-    <section className="skills-section" id="skills">
+    <motion.section
+      className="skills-section"
+      id="skills"
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+    >
       <div className="section-container">
         {/* Header */}
         <div className="skills-header-row">
@@ -46,16 +54,38 @@ export const Skills: React.FC = () => {
         </div>
 
         {/* 20 Tools Pill Grid */}
-        <div className="skills-grid">
+        <motion.div
+          className="skills-grid"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={{
+            hidden: {},
+            visible: {
+              transition: {
+                staggerChildren: 0.03,
+              },
+            },
+          }}
+        >
           {skills.map((skill) => (
-            <div key={skill.name} className="skill-pill-card">
+            <motion.div
+              key={skill.name}
+              className="skill-pill-card"
+              variants={{
+                hidden: { opacity: 0, y: 8 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
+              }}
+              whileHover={{ y: -3, scale: 1.03, transition: { duration: 0.15 } }}
+              whileTap={{ scale: 0.98 }}
+            >
               {renderToolIcon(skill)}
               <span className="skill-pill-name">{skill.name}</span>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 

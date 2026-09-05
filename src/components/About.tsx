@@ -1,8 +1,16 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 
 export const About: React.FC = () => {
   return (
-    <section className="about-section" id="about">
+    <motion.section
+      className="about-section"
+      id="about"
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+    >
       <div className="section-container">
         <h2 className="section-title-serif">About.</h2>
 
@@ -21,7 +29,14 @@ export const About: React.FC = () => {
         </div>
 
         {/* Developer Snapshot Card */}
-        <div className="dev-snapshot-card">
+        <motion.div
+          className="dev-snapshot-card"
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.45, delay: 0.1 }}
+          whileHover={{ y: -2 }}
+        >
           <div className="snapshot-label">DEVELOPER SNAPSHOT</div>
           <div className="snapshot-grid">
             <div className="snapshot-col">
@@ -46,9 +61,9 @@ export const About: React.FC = () => {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { Mail, Clock, MapPin } from 'lucide-react';
 import vishalAvatar from '../assets/images/vishal-profile.jpg';
 
@@ -45,11 +46,36 @@ export const Hero: React.FC = () => {
   }, []);
 
   return (
-    <section className="hero-section" id="hero">
+    <motion.section
+      className="hero-section"
+      id="hero"
+      initial="hidden"
+      animate="visible"
+      variants={{
+        hidden: { opacity: 0 },
+        visible: {
+          opacity: 1,
+          transition: {
+            staggerChildren: 0.1,
+            delayChildren: 0.05,
+          },
+        },
+      }}
+    >
       <div className="section-container">
         {/* Profile Header matching reference photo 2 */}
-        <div className="hero-header-block">
-          <div className="hero-avatar-container">
+        <motion.div
+          className="hero-header-block"
+          variants={{
+            hidden: { opacity: 0, y: 14 },
+            visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
+          }}
+        >
+          <motion.div
+            className="hero-avatar-container"
+            whileHover={{ scale: 1.04 }}
+            transition={{ duration: 0.2 }}
+          >
             <img
               src={vishalAvatar}
               alt="Vishal Kashyap"
@@ -57,7 +83,7 @@ export const Hero: React.FC = () => {
             />
             {/* Green status badge at bottom-right of avatar circle */}
             <span className="avatar-status-dot" title="Online / Open to opportunities"></span>
-          </div>
+          </motion.div>
 
           <div className="hero-info-container">
             {/* Vishal Kashyap in serif font matching image 2 */}
@@ -68,15 +94,27 @@ export const Hero: React.FC = () => {
               <span>vk3293801@gmail.com</span>
             </a>
           </div>
-        </div>
+        </motion.div>
 
         {/* Bio Paragraph */}
-        <p className="hero-bio-paragraph">
+        <motion.p
+          className="hero-bio-paragraph"
+          variants={{
+            hidden: { opacity: 0, y: 12 },
+            visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
+          }}
+        >
           I build fast, thoughtful digital products—from full-stack and real-time web apps to useful NLP/AI systems. I care about clear interfaces, dependable backends, and code that remains easy to read.
-        </p>
+        </motion.p>
 
         {/* Actions Row: Resume | View my work | Divider | Social icons */}
-        <div className="hero-actions-bar">
+        <motion.div
+          className="hero-actions-bar"
+          variants={{
+            hidden: { opacity: 0, y: 12 },
+            visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
+          }}
+        >
           <div className="hero-text-actions">
             <a
               href="https://drive.google.com/file/d/1Xexample/view"
@@ -94,70 +132,90 @@ export const Hero: React.FC = () => {
           <span className="hero-actions-divider" aria-hidden="true">|</span>
 
           <div className="hero-social-icons">
-            <a
+            <motion.a
               href="mailto:vk3293801@gmail.com"
               className="hero-social-link"
               aria-label="Email"
               title="Email"
+              whileHover={{ y: -2, scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
             >
               <Mail size={15} />
-            </a>
-            <a
+            </motion.a>
+            <motion.a
               href="https://x.com/VishalxKodes"
               target="_blank"
               rel="noopener noreferrer"
               className="hero-social-link"
               aria-label="X Twitter"
               title="X"
+              whileHover={{ y: -2, scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
             >
               <XIcon size={14} />
-            </a>
-            <a
+            </motion.a>
+            <motion.a
               href="https://github.com/Vishal795-knightrider"
               target="_blank"
               rel="noopener noreferrer"
               className="hero-social-link"
               aria-label="GitHub"
               title="GitHub"
+              whileHover={{ y: -2, scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
             >
               <GithubIcon size={15} />
-            </a>
-            <a
+            </motion.a>
+            <motion.a
               href="https://www.linkedin.com/in/vishal-kashyap-aa8b43328/"
               target="_blank"
               rel="noopener noreferrer"
               className="hero-social-link"
               aria-label="LinkedIn"
               title="LinkedIn"
+              whileHover={{ y: -2, scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
             >
               <LinkedinIcon size={15} />
-            </a>
+            </motion.a>
           </div>
-        </div>
+        </motion.div>
 
         {/* Twin Cards matching image 2 */}
-        <div className="hero-twin-cards">
+        <motion.div
+          className="hero-twin-cards"
+          variants={{
+            hidden: { opacity: 0, y: 14 },
+            visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
+          }}
+        >
           {/* Status Card */}
-          <div className="hero-card hero-card-status">
+          <motion.div
+            className="hero-card hero-card-status"
+            whileHover={{ y: -2, transition: { duration: 0.2 } }}
+          >
             <span className="card-indicator-dot"></span>
             <div className="card-text-group">
               <span className="card-eyebrow">STATUS</span>
               <span className="card-value">Open to internships</span>
             </div>
-          </div>
+          </motion.div>
 
           {/* Location & IST Clock Card */}
-          <div className="hero-card hero-card-location">
+          <motion.div
+            className="hero-card hero-card-location"
+            whileHover={{ y: -2, transition: { duration: 0.2 } }}
+          >
             <MapPin size={16} className="card-pin-icon" />
             <div className="card-text-group">
               <span className="card-eyebrow">GHAZIABAD, INDIA</span>
               <span className="card-value card-clock-val">{istTime || '13:37:44 IST'}</span>
             </div>
             <Clock size={16} className="card-clock-icon" />
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 
