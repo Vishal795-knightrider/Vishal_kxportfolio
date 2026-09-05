@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Moon, Sun, Search, Menu, X } from 'lucide-react';
+import { Search, Menu, X } from 'lucide-react';
 
 interface NavbarProps {
   isLight: boolean;
@@ -57,16 +57,15 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           <button
             type="button"
-            className="theme-toggle-btn"
+            className={`theme-pill-switch ${isLight ? 'theme-pill--light' : 'theme-pill--dark'}`}
             aria-label={isLight ? 'Switch to dark theme' : 'Switch to light theme'}
             onClick={() => setIsLight(!isLight)}
-            title={isLight ? 'Switch to dark mode' : 'Switch to light mode'}
+            title={`Switch to ${isLight ? 'dark' : 'light'} mode`}
           >
-            {isLight ? (
-              <Moon size={15} strokeWidth={1.8} />
-            ) : (
-              <Sun size={15} strokeWidth={1.8} />
-            )}
+            <span className="theme-switch-track" aria-hidden="true">
+              <span className="theme-switch-thumb" />
+            </span>
+            <span className="theme-switch-text">{isLight ? 'light' : 'dark'}</span>
           </button>
 
           <button

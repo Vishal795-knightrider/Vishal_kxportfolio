@@ -25,13 +25,13 @@ export const Footer: React.FC = () => {
   return (
     <motion.footer
       className="site-footer"
-      initial={{ opacity: 0, y: 14 }}
+      initial={{ opacity: 0, y: 10 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.4 }}
     >
-      <div className="section-container footer-container">
-        {/* Line 1: You're visitor [#no] matching user handwritten note */}
+      <div className="section-container footer-container-stacked">
+        {/* 1. First: You're visitor [#no] */}
         <div className="visitor-row">
           <span className="visitor-text">You're visitor</span>
           <motion.button
@@ -48,21 +48,20 @@ export const Footer: React.FC = () => {
           </motion.button>
         </div>
 
-        {/* Line 2: [add something here] (left) ... [Designed & built] (right) */}
-        <div className="footer-credits-row">
-          <div className="footer-left-content">
-            <span className="footer-live-dot"></span>
-            <span className="footer-live-text">Open to internships &amp; opportunities</span>
-            <span className="footer-sep-dash">•</span>
-            <span className="footer-year">© {new Date().getFullYear()}</span>
-          </div>
+        {/* 2. Below: Open to opportunities */}
+        <div className="footer-status-row">
+          <span className="footer-live-dot"></span>
+          <span className="footer-live-text">Open to internships &amp; opportunities</span>
+          <span className="footer-sep-dash">•</span>
+          <span className="footer-year">© {new Date().getFullYear()}</span>
+        </div>
 
-          <div className="footer-right-content">
-            Designed &amp; built by{' '}
-            <a href="#hero" className="footer-author-link">
-              Vishal Kashyap
-            </a>
-          </div>
+        {/* 3. After small space: Designed & built */}
+        <div className="footer-credits-stacked">
+          <span>Designed &amp; built by </span>
+          <a href="#hero" className="footer-author-link">
+            Vishal Kashyap
+          </a>
         </div>
       </div>
     </motion.footer>
