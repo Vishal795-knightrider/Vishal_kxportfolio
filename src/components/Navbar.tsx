@@ -75,6 +75,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             type="button"
             className="nav-mobile-toggle"
             aria-label="Toggle navigation menu"
+            aria-expanded={isMenuOpen}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             {isMenuOpen ? <X size={20} /> : <Menu size={20} />}

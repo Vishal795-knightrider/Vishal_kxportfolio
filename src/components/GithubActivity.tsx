@@ -87,7 +87,8 @@ function buildMonths(visibleCells: (ContributionDay | null)[], totalCols: number
       if (newMonthDay) {
         const dt = new Date(newMonthDay.date + 'T00:00:00');
         const month = dt.getMonth();
-        if (c - lastLabelCol >= 2 && c <= totalCols - 2) {
+        // Ensure label doesn't hang past right edge by requiring at least 3 columns before the end
+        if (c - lastLabelCol >= 3 && c <= totalCols - 3) {
           labels[c] = dt.toLocaleString('en-US', { month: 'short' });
           lastLabelCol = c;
         }
@@ -169,12 +170,14 @@ export const GithubActivity: React.FC = () => {
     };
   }, [username]);
 
-  // Calculate visible columns fitting container width
+  // Calculate visible columns fitting container width with safety margin to prevent any overflow
+  const isSmallScreen = containerWidth < 500;
+  const colWidth = isSmallScreen ? 8.5 : 10;
+  const colGap = isSmallScreen ? 2.2 : 3;
   const totalAllCols = Math.ceil(cells.length / 7) || 52;
-  const colWidth = 10;
-  const colGap = 3;
-  const maxFittingCols = containerWidth > 0
-    ? Math.floor((containerWidth + colGap) / (colWidth + colGap))
+  const safeAvailableWidth = Math.max(0, containerWidth - 8);
+  const maxFittingCols = safeAvailableWidth > 0
+    ? Math.floor((safeAvailableWidth + colGap) / (colWidth + colGap))
     : totalAllCols;
   const visibleCols = Math.max(1, Math.min(totalAllCols, maxFittingCols));
 
@@ -224,11 +227,20 @@ export const GithubActivity: React.FC = () => {
         {/* Heatmap Card */}
         <div className="gh-card">
           <div className="gh-scroll-container" ref={containerRef}>
-            <div className="gh-calendar-area">
+            <div
+              className="gh-calendar-area"
+              style={{
+                ['--gh-col-size' as string]: `${colWidth}px`,
+                ['--gh-col-gap' as string]: `${colGap}px`,
+              }}
+            >
               {/* Month Labels */}
               <div
                 className="gh-months-bar"
-                style={{ gridTemplateColumns: `repeat(${visibleCols}, 10px)` }}
+                style={{
+                  gridTemplateColumns: `repeat(${visibleCols}, ${colWidth}px)`,
+                  gap: `${colGap}px`,
+                }}
               >
                 {monthLabels.map((m, i) => (
                   <span key={i} className="gh-month-name">
@@ -240,7 +252,11 @@ export const GithubActivity: React.FC = () => {
               {/* Grid of contribution squares */}
               <div
                 className="gh-grid-cells"
-                style={{ gridTemplateColumns: `repeat(${visibleCols}, 10px)` }}
+                style={{
+                  gridTemplateColumns: `repeat(${visibleCols}, ${colWidth}px)`,
+                  gridTemplateRows: `repeat(7, ${colWidth}px)`,
+                  gap: `${colGap}px`,
+                }}
               >
                 {gridElements}
               </div>

@@ -488,21 +488,46 @@ body.dark .theme-switch-track {
 /* Mobile dropdown menu */
 .mobile-menu {
   position: fixed;
-  top: 60px;
+  top: 57px;
   left: 0;
   right: 0;
-  background: var(--surface);
+  background: rgba(250, 249, 246, 0.96);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border);
-  padding: 16px 24px;
+  padding: 12px 20px;
   flex-direction: column;
-  gap: 14px;
+  gap: 4px;
   z-index: 45;
   box-shadow: var(--shadow-md);
+  animation: mobile-menu-slide 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+body.dark .mobile-menu {
+  background: rgba(19, 19, 22, 0.96);
+}
+
+@keyframes mobile-menu-slide {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .mobile-menu a {
-  font-size: 0.95rem;
+  font-size: 0.92rem;
+  font-weight: 500;
   color: var(--text-secondary);
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  text-transform: lowercase;
+  transition: background-color 0.15s ease, color 0.15s ease;
+  display: flex;
+  align-items: center;
+}
+
+.mobile-menu a:hover,
+.mobile-menu a:active {
+  background: var(--surface-subtle);
+  color: var(--text-primary);
 }
 
 /* ==========================================================================
@@ -1398,8 +1423,8 @@ body.dark .pixel-box-on {
 }
 
 .gh-square {
-  width: 10px;
-  height: 10px;
+  width: var(--gh-col-size, 10px);
+  height: var(--gh-col-size, 10px);
   border-radius: 2px;
   transition: transform 0.1s ease;
 }
@@ -1410,8 +1435,8 @@ body.dark .pixel-box-on {
 }
 
 .gh-square-empty {
-  width: 10px;
-  height: 10px;
+  width: var(--gh-col-size, 10px);
+  height: var(--gh-col-size, 10px);
 }
 
 .gh-level-0 {
@@ -2102,10 +2127,22 @@ body.dark .contact-pill-animated:hover {
 }
 
 /* ==========================================================================
-   RESPONSIVE DESIGN
+   RESPONSIVE DESIGN (Scoped strictly for mobile & tablet, desktop preserved)
    ========================================================================== */
 
+/* Tablet Optimization (681px - 840px) */
+@media (max-width: 840px) and (min-width: 681px) {
+  .nav-links-desktop {
+    gap: 12px;
+  }
+  .nav-link-item {
+    font-size: 0.82rem;
+  }
+}
+
+/* Mobile & Small Screen Optimization (<= 680px) */
 @media (max-width: 680px) {
+  /* Navbar */
   .nav-links-desktop {
     display: none;
   }
@@ -2114,24 +2151,104 @@ body.dark .contact-pill-animated:hover {
     display: flex;
   }
 
-  .hero-dual-cards {
+  /* Hero */
+  .hero-section {
+    padding-top: 28px;
+  }
+
+  .hero-twin-cards {
     grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  /* Projects Section */
+  .projects-header-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .projects-filter-tabs {
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 6px;
   }
 
   .projects-grid {
     grid-template-columns: 1fr;
+    gap: 18px;
   }
 
   .project-item-full {
     grid-column: auto;
   }
 
-  .snapshot-grid {
-    grid-template-columns: 1fr;
+  .project-card {
+    max-width: 100%;
   }
 
+  .project-image-wrap {
+    height: 180px;
+  }
+
+  /* About Snapshot */
+  .snapshot-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  /* Experience Section */
+  .experience-card {
+    padding: 18px 16px;
+  }
+
+  .exp-card-top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  /* Education Section (Clean single column on mobile) */
+  .education-item-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    padding: 12px 0;
+    margin: 0;
+  }
+
+  .edu-right-col {
+    text-align: left;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* Certifications Section */
+  .certification-item-row {
+    padding: 10px 0;
+    margin: 0;
+    gap: 12px;
+  }
+
+  .cert-title-text {
+    word-break: break-word;
+  }
+
+  /* GitHub Activity */
+  .gh-card {
+    padding: 16px 14px;
+  }
+
+  .gh-card-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  /* Typography & Contact CTA */
   .section-title-serif {
-    font-size: 1.8rem;
+    font-size: 1.85rem;
   }
 
   .contact-title-serif {
@@ -2139,12 +2256,144 @@ body.dark .contact-pill-animated:hover {
   }
 
   .contact-card {
-    padding: 32px 20px;
+    padding: 32px 18px;
   }
 
-  .footer-inner {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
+  .architectural-divider {
+    margin: 36px auto;
+  }
+}
+
+/* Phone Screen Optimization (<= 480px) */
+@media (max-width: 480px) {
+  .section-container {
+    padding: 0 16px;
+  }
+
+  .nav-outer {
+    padding: 12px 16px;
+  }
+
+  .hero-header-block {
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .hero-avatar-container {
+    width: 68px;
+    height: 68px;
+  }
+
+  .hero-actions-bar {
+    gap: 12px;
+  }
+
+  .hero-text-actions {
+    gap: 14px;
+  }
+
+  .hero-bio-paragraph {
+    font-size: 0.92rem;
+    line-height: 1.65;
+    margin-bottom: 20px;
+  }
+
+  .project-body {
+    padding: 14px 14px 16px;
+  }
+
+  .contact-card {
+    padding: 28px 14px;
+  }
+
+  .contact-description {
+    font-size: 0.88rem;
+    margin-bottom: 22px;
+  }
+
+  .contact-links-row {
+    gap: 8px;
+  }
+
+  .contact-pill-btn {
+    padding: 6px 14px;
+    font-size: 0.8rem;
+  }
+
+  .gh-card {
+    padding: 14px 12px;
+  }
+
+  .gh-count-text {
+    font-size: 0.76rem;
+  }
+
+  .cmd-backdrop {
+    padding-top: 8vh;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .cmd-footer {
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 0.7rem;
+  }
+
+  .footer-container-clean {
+    gap: 8px;
+  }
+
+  .footer-visitor-clean-btn {
+    font-size: 0.78rem;
+  }
+
+  .footer-text-row {
+    font-size: 0.78rem;
+  }
+}
+
+/* Ultra-Compact Phone Optimization (<= 360px like iPhone SE 1st gen) */
+@media (max-width: 360px) {
+  .section-container {
+    padding: 0 12px;
+  }
+
+  .nav-outer {
+    padding: 10px 12px;
+  }
+
+  .brand-logo {
+    font-size: 1.05rem;
+  }
+
+  .nav-search-btn {
+    padding: 4px 7px;
+  }
+
+  .search-cmd-k {
+    display: none;
+  }
+
+  .hero-avatar-container {
+    width: 58px;
+    height: 58px;
+  }
+
+  .hero-name-serif {
+    font-size: 1.75rem;
+  }
+
+  .section-title-serif {
+    font-size: 1.65rem;
+  }
+
+  .contact-title-serif {
+    font-size: 1.65rem;
+  }
+
+  .contact-pill-btn {
+    padding: 5px 11px;
+    font-size: 0.76rem;
   }
 }

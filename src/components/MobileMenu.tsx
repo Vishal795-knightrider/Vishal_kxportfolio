@@ -13,7 +13,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, setIsOpen }) => 
   };
 
   return (
-    <div className="mobile-menu open" id="mobileMenu" style={{ display: 'flex' }}>
+    <nav className="mobile-menu open" id="mobileMenu" role="navigation" aria-label="Mobile Navigation" style={{ display: 'flex' }}>
       <a href="#about" onClick={handleLinkClick}>about</a>
       <a href="#projects" onClick={handleLinkClick}>projects</a>
       <a href="#experience" onClick={handleLinkClick}>experience</a>
@@ -21,7 +21,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, setIsOpen }) => 
       <a href="#github-activity" onClick={handleLinkClick}>activity</a>
       <a href="#education" onClick={handleLinkClick}>education</a>
       <a href="#contact" onClick={handleLinkClick}>contact</a>
-    </div>
+    </nav>
   );
 };
 export default MobileMenu;
