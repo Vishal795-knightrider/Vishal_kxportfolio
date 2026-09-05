@@ -790,12 +790,13 @@ body.dark .avatar-status-dot {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, box-shadow 0.25s ease;
 }
 
 .project-card:hover {
+  transform: translateY(-3px);
   border-color: var(--border-hover);
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
 }
 
 .project-image-wrap {
@@ -811,11 +812,11 @@ body.dark .avatar-status-dot {
   height: 100%;
   object-fit: cover;
   object-position: center;
-  transition: transform 0.3s ease;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .project-card:hover .project-image {
-  transform: scale(1.02);
+  transform: scale(1.04);
 }
 
 .project-floating-badge {
@@ -949,6 +950,12 @@ body.dark .avatar-status-dot {
 
 .project-action-link .arrow {
   font-size: 0.85rem;
+  display: inline-block;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.project-action-link:hover .arrow {
+  transform: translate(2px, -2px);
 }
 
 .project-notice {
@@ -1325,13 +1332,19 @@ body.dark .avatar-status-dot {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  padding-bottom: 14px;
+  padding: 10px 12px;
+  margin: 0 -12px;
+  border-radius: var(--radius-sm);
   border-bottom: 1px solid var(--border-subtle);
+  transition: background 0.15s ease;
+}
+
+.education-item-row:hover {
+  background: var(--surface-subtle);
 }
 
 .education-item-row:last-child {
   border-bottom: none;
-  padding-bottom: 0;
 }
 
 .edu-left-col {
@@ -1389,6 +1402,14 @@ body.dark .avatar-status-dot {
   display: flex;
   align-items: center;
   gap: 14px;
+  padding: 8px 12px;
+  margin: 0 -12px;
+  border-radius: var(--radius-sm);
+  transition: background 0.15s ease;
+}
+
+.certification-item-row:hover {
+  background: var(--surface-subtle);
 }
 
 .cert-icon-col {
