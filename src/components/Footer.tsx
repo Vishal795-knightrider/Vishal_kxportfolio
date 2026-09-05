@@ -1,25 +1,58 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 export const Footer: React.FC = () => {
-  const [visitorCount, setVisitorCount] = useState<number>(52);
+  const [visitorCount, setVisitorCount] = useState<number | null>(null);
+  const [hasError, setHasError] = useState<boolean>(false);
   const [hasInteracted, setHasInteracted] = useState(false);
+  const hasFetched = useRef(false);
 
   useEffect(() => {
-    // Persistent local storage visitor counter
-    const stored = localStorage.getItem('vk_visitor_num');
-    if (stored) {
-      setVisitorCount(parseInt(stored, 10));
-    } else {
-      const newCount = 52 + Math.floor(Math.random() * 12);
-      localStorage.setItem('vk_visitor_num', newCount.toString());
-      setVisitorCount(newCount);
+    // Avoid double-fetching during React 18 Strict Mode mount/unmount in dev
+    if (hasFetched.current) return;
+    hasFetched.current = true;
+
+    let isMounted = true;
+
+    async function fetchVisitorCount() {
+      try {
+        const response = await fetch('/api/visitor', {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`API error: ${response.status}`);
+        }
+
+        const data = await response.json();
+        if (isMounted && typeof data?.count === 'number') {
+          setVisitorCount(data.count);
+          setHasError(false);
+        } else if (isMounted) {
+          setHasError(true);
+        }
+      } catch {
+        if (isMounted) {
+          setHasError(true);
+        }
+      }
     }
+
+    fetchVisitorCount();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const handleBoxClick = () => {
     setHasInteracted(true);
     setTimeout(() => setHasInteracted(false), 2000);
   };
+
+  const displayCount = visitorCount !== null ? visitorCount : hasError ? '—' : '...';
 
   return (
     <footer className="site-footer">
@@ -31,10 +64,10 @@ export const Footer: React.FC = () => {
             className="footer-visitor-clean-btn"
             onClick={handleBoxClick}
             title="Click to celebrate!"
-            aria-label={`Visitor number ${visitorCount}`}
+            aria-label={visitorCount !== null ? `Visitor number ${visitorCount}` : 'Visitor counter'}
           >
             <span className="footer-visitor-clean-label">You're visitor</span>
-            <span className="footer-visitor-clean-num">#{visitorCount}</span>
+            <span className="footer-visitor-clean-num">#{displayCount}</span>
             {hasInteracted && <span className="visitor-toast">👋 Hello!</span>}
           </button>
         </div>
