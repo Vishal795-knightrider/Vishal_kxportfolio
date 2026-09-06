@@ -1,9 +1,18 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { ExternalLink } from 'lucide-react';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ExternalLink, ChevronRight } from 'lucide-react';
 import { experience } from '../data/experience';
 
 export const Experience: React.FC = () => {
+  const [expandedMap, setExpandedMap] = useState<Record<number, boolean>>({});
+
+  const toggleExpanded = (index: number) => {
+    setExpandedMap((prev) => ({
+      ...prev,
+      [index]: !prev[index]
+    }));
+  };
+
   return (
     <motion.section
       className="experience-section"
@@ -25,6 +34,7 @@ export const Experience: React.FC = () => {
             const hasBuiltProjects = Boolean(
               item.builtProjects && item.builtProjects.length > 0
             );
+            const isExpanded = Boolean(expandedMap[index]);
 
             return (
               <motion.div
@@ -76,7 +86,7 @@ export const Experience: React.FC = () => {
                       {item.bullets.map((bullet, bIdx) => (
                         <li key={bIdx} className="exp-bullet-item">
                           <span className="exp-bullet-dot">•</span>
-                          <span>{bullet}</span>
+                          <span className="exp-bullet-text">{bullet}</span>
                         </li>
                       ))}
                     </ul>
@@ -91,52 +101,65 @@ export const Experience: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* 6. Built Projects Tree Section */}
+                  {/* 6. Built Projects Section (Collapsible Accordion) */}
                   {hasBuiltProjects && item.builtProjects && (
                     <div className="exp-built-section">
-                      <div className="exp-built-heading-wrap">
-                        <div className="exp-heading-connector-line" />
-                        <h4 className="exp-built-heading">
-                          {item.builtProjectsTitle || 'What I built at IISPPR'}
-                        </h4>
+                      <div className={`exp-built-heading-wrap ${isExpanded ? 'is-expanded' : ''}`}>
+                        {/* Curved branch line joining timeline from logo into 'What I built' */}
+                        <div className="exp-heading-branch" />
+                        <button
+                          type="button"
+                          className="exp-built-toggle-btn"
+                          onClick={() => toggleExpanded(index)}
+                          aria-expanded={isExpanded}
+                        >
+                          <motion.span
+                            className="exp-accordion-arrow-wrap"
+                            animate={{ rotate: isExpanded ? 90 : 0 }}
+                            transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+                          >
+                            <ChevronRight size={14} className="exp-accordion-chevron" strokeWidth={2.2} />
+                          </motion.span>
+                          <h4 className="exp-built-heading">
+                            {item.builtProjectsTitle || 'What I built at IISPPR'}
+                          </h4>
+                        </button>
                       </div>
 
-                      <div className="exp-built-tree">
-                        {item.builtProjects.map((project, pIdx) => {
-                          const isLast =
-                            pIdx === item.builtProjects!.length - 1;
-                          return (
-                            <div
-                              key={pIdx}
-                              className={`exp-tree-item ${
-                                isLast ? 'is-last' : ''
-                              }`}
-                            >
-                              {/* Connector stem and node dot */}
-                              <div className="exp-tree-branch">
-                                <div className="exp-branch-stem" />
-                                <span className="exp-branch-dot" />
-                              </div>
-
-                              {/* Project Link Card */}
-                              <a
-                                href={project.url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="exp-project-link-card"
-                              >
-                                <span className="exp-project-title">
-                                  {project.title}
-                                </span>
-                                <ExternalLink
-                                  className="exp-project-icon"
-                                  size={14}
-                                />
-                              </a>
+                      <AnimatePresence initial={false}>
+                        {isExpanded && (
+                          <motion.div
+                            key="built-projects-container"
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                            style={{ overflow: 'hidden' }}
+                          >
+                            <div className="exp-built-projects-list">
+                              {item.builtProjects.map((project, pIdx) => (
+                                <div key={pIdx} className="exp-built-project-item">
+                                  <span className="exp-built-project-dot">•</span>
+                                  <a
+                                    href={project.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="exp-project-link"
+                                  >
+                                    <span className="exp-project-title">
+                                      {project.title}
+                                    </span>
+                                    <ExternalLink
+                                      className="exp-project-icon"
+                                      size={13}
+                                    />
+                                  </a>
+                                </div>
+                              ))}
                             </div>
-                          );
-                        })}
-                      </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
                     </div>
                   )}
                 </div>

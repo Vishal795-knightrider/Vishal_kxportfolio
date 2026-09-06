@@ -7,6 +7,7 @@
    ========================================================================== */
 
 :root {
+  color-scheme: light;
   /* LIGHT MODE TOKENS (Matching reference photo 2) */
   --bg: #faf9f6;
   --bg-subtle: #f4f2eb;
@@ -55,6 +56,7 @@
 }
 
 body.dark {
+  color-scheme: dark;
   /* DARK MODE TOKENS (Matching reference photo 3) */
   --bg: #09090b;
   --bg-subtle: #121215;
@@ -105,6 +107,15 @@ body.dark {
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 80px;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+  display: none; /* Chrome, Safari, Opera */
 }
 
 body {
@@ -117,6 +128,8 @@ body {
   min-height: 100vh;
   position: relative;
   transition: background-color 0.25s ease, color 0.25s ease;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 /* Square boxes grid background matching image 3 and image 2 */
@@ -1476,6 +1489,8 @@ body.light .exp-timeline-item {
   flex-direction: column;
   gap: 8px;
   margin-top: 14px;
+  max-width: 600px;
+  width: 100%;
 }
 
 .exp-bullet-item {
@@ -1485,12 +1500,23 @@ body.light .exp-timeline-item {
   font-size: 0.91rem;
   color: var(--text-secondary);
   line-height: 1.65;
+  width: 100%;
 }
 
 .exp-bullet-dot {
   color: var(--text-muted);
   font-size: 0.85rem;
   flex-shrink: 0;
+  line-height: inherit;
+  user-select: none;
+}
+
+.exp-bullet-text {
+  flex: 1;
+  min-width: 0;
+  text-wrap: pretty;
+  word-break: normal;
+  overflow-wrap: break-word;
 }
 
 .exp-tags-row {
@@ -1500,120 +1526,109 @@ body.light .exp-timeline-item {
   margin-top: 16px;
 }
 
-/* Built Projects Tree Section */
+/* Built Projects Tree Section (Collapsible Accordion) */
 .exp-built-section {
   display: flex;
   flex-direction: column;
-  margin-top: 26px;
+  margin-top: 18px;
   position: relative;
 }
 
 .exp-built-heading-wrap {
   position: relative;
-  margin-bottom: 20px;
+  margin-bottom: 0;
+  display: flex;
+  align-items: center;
+  transition: margin-bottom 0.2s ease;
 }
 
-.exp-heading-connector-line {
+.exp-built-heading-wrap.is-expanded {
+  margin-bottom: 16px;
+}
+
+/* Curved branch line joining timeline from logo into 'What I built' */
+.exp-heading-branch {
   position: absolute;
   left: calc(-1 * var(--rail-offset));
-  top: 0;
-  bottom: 0;
-  width: 1px;
-  background: var(--tree-line);
+  top: -18px;
+  height: calc(18px + 14px);
+  width: calc(var(--rail-offset) - 6px);
+  border-left: 1px solid var(--tree-line);
+  border-bottom: 1px solid var(--tree-line);
+  border-bottom-left-radius: 10px;
   pointer-events: none;
+}
+
+.exp-built-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  padding: 3px 0;
+  margin: 0;
+  cursor: pointer;
+  color: var(--text-secondary);
+  font-family: inherit;
+  text-align: left;
+  border-radius: var(--radius-sm);
+  transition: color 0.15s ease;
+}
+
+.exp-built-toggle-btn:hover {
+  color: var(--text-primary);
+}
+
+.exp-accordion-arrow-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  transition: color 0.15s ease;
+}
+
+.exp-built-toggle-btn:hover .exp-accordion-arrow-wrap {
+  color: var(--text-primary);
 }
 
 .exp-built-heading {
   font-family: var(--sans);
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 600;
-  color: var(--text-primary);
+  color: inherit;
   letter-spacing: -0.01em;
   margin: 0;
   line-height: 1.4;
 }
 
-.exp-built-tree {
+/* Built Projects List (Clean bullet list indented under heading, no bottom tree lines) */
+.exp-built-projects-list {
   display: flex;
   flex-direction: column;
-  position: relative;
-}
-
-.exp-tree-item {
-  position: relative;
-  display: flex;
-  align-items: flex-start;
-  padding-bottom: 22px;
-}
-
-.exp-tree-item.is-last {
+  gap: 10px;
+  padding-left: 22px;
+  padding-top: 4px;
   padding-bottom: 4px;
 }
 
-.exp-tree-branch {
-  position: absolute;
-  left: calc(-1 * var(--rail-offset));
-  top: 0;
-  bottom: 0;
-  width: calc(var(--rail-offset) + 26px);
-  pointer-events: none;
+.exp-built-project-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-/* Branch vertical line + horizontal arm for non-last items */
-.exp-branch-stem {
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 1px;
-  background: var(--tree-line);
+.exp-built-project-dot {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  line-height: 1;
+  flex-shrink: 0;
+  user-select: none;
 }
 
-.exp-branch-stem::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 10px;
-  width: 100%;
-  height: 1px;
-  background: var(--tree-line);
-}
-
-/* Branch node dot */
-.exp-branch-dot {
-  position: absolute;
-  right: 0;
-  top: 7px;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--tree-dot);
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* Last branch item curves 90 degrees and terminates */
-.exp-tree-item.is-last .exp-tree-branch {
-  bottom: auto;
-  height: 11px;
-}
-
-.exp-tree-item.is-last .exp-branch-stem {
-  bottom: auto;
-  height: 11px;
-  width: 100%;
-  background: transparent;
-  border-left: 1px solid var(--tree-line);
-  border-bottom: 1px solid var(--tree-line);
-  border-bottom-left-radius: 10px;
-}
-
-.exp-tree-item.is-last .exp-branch-stem::after {
-  display: none;
-}
-
-/* Project card link */
-.exp-project-link-card {
-  margin-left: 38px;
+.exp-project-link {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -1621,14 +1636,23 @@ body.light .exp-timeline-item {
   cursor: pointer;
   padding: 1px 4px;
   border-radius: var(--radius-sm);
-  transition: transform 0.15s ease;
+  color: var(--text-primary);
+  transition: all 0.15s ease;
+}
+
+.exp-project-link:hover {
+  color: #ffffff;
+}
+
+body.light .exp-project-link:hover {
+  color: #000000;
 }
 
 .exp-project-title {
   font-family: var(--sans);
-  font-size: 0.95rem;
+  font-size: 0.93rem;
   font-weight: 500;
-  color: var(--text-primary);
+  color: inherit;
   line-height: 1.4;
   letter-spacing: -0.005em;
   transition: color 0.15s ease;
@@ -1636,34 +1660,13 @@ body.light .exp-timeline-item {
 
 .exp-project-icon {
   color: var(--text-muted);
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), color 0.15s ease;
+  transition: transform 0.15s ease, color 0.15s ease;
   flex-shrink: 0;
 }
 
-/* Interactivity and Hover states */
-.exp-project-link-card:hover .exp-project-title {
-  color: #ffffff;
-}
-
-body.light .exp-project-link-card:hover .exp-project-title {
-  color: #000000;
-}
-
-.exp-project-link-card:hover .exp-project-icon {
-  color: var(--text-primary);
-  transform: translate(2px, -2px);
-}
-
-.exp-tree-item:hover .exp-branch-dot {
-  background: var(--text-primary);
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.45);
-  transform: scale(1.25);
-}
-
-body.light .exp-tree-item:hover .exp-branch-dot {
-  background: var(--text-primary);
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
-  transform: scale(1.25);
+.exp-project-link:hover .exp-project-icon {
+  color: inherit;
+  transform: translate(1px, -1px);
 }
 
 /* ==========================================================================
