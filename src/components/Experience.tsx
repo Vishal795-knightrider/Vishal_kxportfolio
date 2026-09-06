@@ -1,7 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { experience } from '../data/experience';
-import { Building2 } from 'lucide-react';
 
 export const Experience: React.FC = () => {
   return (
@@ -19,52 +18,78 @@ export const Experience: React.FC = () => {
           <h2 className="section-title-serif">Work Experience.</h2>
         </div>
 
-        {/* Experience Cards */}
-        <div className="experience-list">
+        {/* Timeline Layout */}
+        <div className="experience-timeline">
           {experience.map((item, index) => (
             <motion.div
-              className="experience-card"
+              className="exp-timeline-item"
               key={index}
               initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.45 }}
-              whileHover={{ y: -2 }}
             >
-              {/* Top Row: Company & Duration Badge */}
-              <div className="exp-card-top">
-                <div className="exp-company-group">
-                  <div className="company-icon-box">
-                    <Building2 size={16} />
-                  </div>
-                  <span className="exp-company-name">{item.company}</span>
+              {/* Left Timeline Rail (Logo marker + vertical line) */}
+              <div className="exp-timeline-rail">
+                <div className="exp-timeline-marker">
+                  {item.logo ? (
+                    <img
+                      src={item.logo}
+                      alt={`${item.company} logo`}
+                      className="exp-timeline-logo"
+                    />
+                  ) : (
+                    <span className="exp-timeline-dot" />
+                  )}
                 </div>
-
-                <div className="exp-badge">
-                  {item.durationBadge}
-                </div>
+                <div className="exp-timeline-line" />
               </div>
 
-              {/* Role */}
-              <h3 className="exp-role-title">{item.role}</h3>
+              {/* Right Content Column */}
+              <div className="exp-timeline-content">
+                {/* 1. Company Name */}
+                <h3 className="exp-company-name">{item.company}</h3>
 
-              {/* Bullet Points */}
-              <ul className="exp-bullets-list">
-                {item.bullets.map((bullet, bIdx) => (
-                  <li key={bIdx} className="exp-bullet-item">
-                    <span className="exp-bullet-dot">•</span>
-                    <span>{bullet}</span>
-                  </li>
-                ))}
-              </ul>
+                {/* 2 & 3. Role, Employment Type & Duration */}
+                <div className="exp-meta-row">
+                  <span className="exp-role">{item.role}</span>
+                  <span className="exp-type-pill">{item.employmentType}</span>
+                  <span className="exp-meta-separator">·</span>
+                  <span className="exp-duration">{item.duration}</span>
+                </div>
 
-              {/* Tech Stack Tags */}
-              <div className="exp-tags-row">
-                {item.tags.map((tag) => (
-                  <span key={tag} className="tech-tag-pill">
-                    {tag}
-                  </span>
-                ))}
+                {/* 4. Concise Bullet Points */}
+                <ul className="exp-bullets-list">
+                  {item.bullets.map((bullet, bIdx) => (
+                    <li key={bIdx} className="exp-bullet-item">
+                      <span className="exp-bullet-dot">•</span>
+                      <span>{bullet}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                {/* 5. Technology Tags */}
+                <div className="exp-tags-row">
+                  {item.tags.map((tag) => (
+                    <span key={tag} className="tech-tag-pill">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                {/* 6. Company / Site Link (if present) */}
+                {item.verifyUrl && (
+                  <div className="exp-links-row">
+                    <a
+                      href={item.verifyUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="exp-site-link"
+                    >
+                      SITE <span className="arrow">↗</span>
+                    </a>
+                  </div>
+                )}
               </div>
             </motion.div>
           ))}

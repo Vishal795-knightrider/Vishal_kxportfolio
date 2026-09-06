@@ -348,7 +348,6 @@ body {
 .nav-outer,
 .hero-card,
 .project-card,
-.experience-card,
 .contact-card,
 .gh-card,
 .site-footer,
@@ -1158,85 +1157,179 @@ body.dark .pixel-box-on {
   color: var(--text-primary);
 }
 
-.experience-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  padding: 20px 22px;
+.experience-timeline {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  margin-top: 4px;
 }
 
-.exp-card-top {
+.exp-timeline-item {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 10px;
+  gap: 16px;
+  position: relative;
 }
 
-.exp-company-group {
+.exp-timeline-rail {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 10px;
+  flex-shrink: 0;
+  width: 28px;
 }
 
-.company-icon-box {
+.exp-timeline-marker {
   width: 28px;
   height: 28px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: #000000;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--bg-subtle);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-sm);
-  color: var(--text-secondary);
+  flex-shrink: 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.exp-timeline-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.exp-timeline-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--text-muted);
+}
+
+.exp-timeline-line {
+  width: 1px;
+  flex: 1;
+  background: var(--border);
+  margin-top: 8px;
+  min-height: 48px;
+}
+
+.exp-timeline-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 8px;
+  max-width: 720px;
 }
 
 .exp-company-name {
-  font-size: 1rem;
+  font-size: 1.15rem;
   font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.exp-meta-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+  font-size: 0.88rem;
+}
+
+.exp-role {
+  font-weight: 500;
   color: var(--text-primary);
 }
 
-.exp-badge {
+.exp-type-pill {
   font-family: var(--mono);
-  font-size: 0.72rem;
-  color: var(--text-muted);
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  padding: 2px 7px;
+  border-radius: var(--radius-sm);
+  background: var(--surface-subtle);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
 }
 
-.exp-role-title {
-  font-size: 0.95rem;
-  font-weight: 500;
-  color: var(--text-secondary);
+.exp-meta-separator {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+.exp-duration {
+  color: var(--text-muted);
+  font-size: 0.84rem;
 }
 
 .exp-bullets-list {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
+  margin-top: 14px;
 }
 
 .exp-bullet-item {
   display: flex;
   align-items: baseline;
-  gap: 8px;
-  font-size: 0.88rem;
+  gap: 10px;
+  font-size: 0.91rem;
   color: var(--text-secondary);
-  line-height: 1.55;
+  line-height: 1.65;
 }
 
 .exp-bullet-dot {
   color: var(--text-muted);
+  font-size: 0.85rem;
+  flex-shrink: 0;
 }
 
 .exp-tags-row {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  padding-top: 6px;
+  margin-top: 16px;
+}
+
+.exp-links-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.exp-site-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  color: var(--text-secondary);
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  background: var(--surface-subtle);
+  border: 1px solid var(--border-subtle);
+  transition: all 0.15s ease;
+}
+
+.exp-site-link:hover {
+  color: var(--text-primary);
+  border-color: var(--border-hover);
+  background: var(--surface);
+}
+
+.exp-site-link .arrow {
+  font-size: 0.8rem;
+  transition: transform 0.15s ease;
+}
+
+.exp-site-link:hover .arrow {
+  transform: translate(1px, -1px);
 }
 
 /* ==========================================================================
@@ -2148,15 +2241,23 @@ body.dark .contact-pill-animated:hover {
     height: 180px;
   }
 
-  /* Experience Section */
-  .experience-card {
-    padding: 18px 16px;
+  /* Experience Section (Timeline on mobile) */
+  .exp-timeline-item {
+    gap: 12px;
   }
 
-  .exp-card-top {
-    flex-direction: column;
-    align-items: flex-start;
+  .exp-timeline-rail {
+    width: 24px;
+  }
+
+  .exp-timeline-marker {
+    width: 24px;
+    height: 24px;
+  }
+
+  .exp-meta-row {
     gap: 6px;
+    font-size: 0.84rem;
   }
 
   /* Education Section (Clean single column on mobile) */
