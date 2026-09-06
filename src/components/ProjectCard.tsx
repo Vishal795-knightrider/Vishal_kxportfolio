@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { ExternalLink, Github, GitBranch, Film, Layers } from 'lucide-react';
+import { Film, GitBranch, Layers } from 'lucide-react';
 import { Project } from '../data/projects';
 
 interface ProjectCardProps {
@@ -23,7 +23,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
       const playPromise = video.play();
       if (playPromise !== undefined) {
         playPromise.catch(() => {
-          // Gracefully ignore browser auto-play policy rejections
+          // Gracefully handle browser auto-play policy rejections
         });
       }
     } else {
@@ -33,17 +33,17 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   }, [isHovered, hasVideo]);
 
   return (
-    <article
-      className="gallery-project-card"
+    <div
+      className="gallery-item"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* 16:10 Visual Media Preview */}
+      {/* 16:10 Visual Media Preview (Image or Video) */}
       <div className="gallery-media-container">
         {project.isConcept ? (
           /* FrameGit Concept Preview Canvas - Clearly labeled wireframe/concept */
           <div className="gallery-concept-canvas">
-            {/* Ambient visual background pattern */}
+            {/* Ambient grid background pattern */}
             <div className="concept-canvas-grid" />
 
             {/* Concept Illustration: Video timeline track + Git branching */}
@@ -79,13 +79,13 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
                   CONCEPT PREVIEW
                 </span>
                 <span className="concept-caption">
-                  Version control for video editors & designers
+                  Version control for video editors &amp; designers
                 </span>
               </div>
             </div>
           </div>
         ) : (
-          /* Standard Image + Video Preview */
+          /* Standard Image + Hover Video Preview */
           <>
             {project.image && (
               <img
@@ -111,53 +111,52 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
         )}
       </div>
 
-      {/* Project Meta Footer: Title & Status */}
-      <div className="gallery-card-footer">
-        <div className="gallery-title-row">
-          <h3 className="gallery-project-title">
-            {project.links.live ? (
-              <a
-                href={project.links.live}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="gallery-title-link"
-              >
-                <span>{project.title}</span>
-                <ExternalLink className="gallery-link-icon" size={13} />
-              </a>
-            ) : (
-              <span>{project.title}</span>
-            )}
-          </h3>
-        </div>
-
-        <div className="gallery-status-row">
+      {/* Minimal Project Information Underneath (No outer card) */}
+      <div className="gallery-item-info">
+        <div className="gallery-item-header">
+          <h3 className="gallery-item-title">{project.title}</h3>
           <span
-            className={`gallery-status-pill ${
+            className={`gallery-status-badge ${
               isLive ? 'status-live' : 'status-progress'
             }`}
           >
             <span className="gallery-status-dot" />
             <span>{project.badges.statusText}</span>
           </span>
-
-          {project.links.github && (
-            <a
-              href={project.links.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="gallery-icon-btn"
-              aria-label={`${project.title} source code on GitHub`}
-              title="View on GitHub"
-            >
-              <Github size={14} />
-            </a>
-          )}
         </div>
+
+        {/* Action links row: Live ↗ and GitHub ↗ for live projects */}
+        {(project.links.live || project.links.github) && (
+          <div className="gallery-item-links">
+            {project.links.live && (
+              <a
+                href={project.links.live}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="gallery-action-link"
+              >
+                <span>Live</span>
+                <span className="link-arrow">↗</span>
+              </a>
+            )}
+            {project.links.github && (
+              <a
+                href={project.links.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="gallery-action-link"
+              >
+                <span>GitHub</span>
+                <span className="link-arrow">↗</span>
+              </a>
+            )}
+          </div>
+        )}
       </div>
-    </article>
+    </div>
   );
 };
 
 export default ProjectCard;
+
 
