@@ -97,18 +97,25 @@ export const Hero: React.FC = () => {
           </div>
         </motion.div>
 
-        {/* Bio Paragraph */}
-        <motion.p
-          className="hero-bio-paragraph"
+        {/* Bio Block with Tech Stack Capsules */}
+        <motion.div
+          className="hero-bio-block"
           variants={{
             hidden: { opacity: 0, y: 12 },
             visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
           }}
         >
-        Full Stack Developer building modern web applications and exploring intelligent systems with AI.
-        <br />
-        React · Next.js · Node.js · Express · MongoDB · PostgreSQL · ML · AI
-        </motion.p>
+          <p className="hero-bio-text">
+            Full Stack Developer building modern web applications and exploring intelligent systems with AI.
+          </p>
+          <div className="hero-tech-capsules-row">
+            {['React', 'Next.js', 'Node.js', 'Express', 'MongoDB', 'PostgreSQL', 'ML', 'AI'].map((tech) => (
+              <span key={tech} className="hero-tech-capsule">
+                {tech}
+              </span>
+            ))}
+          </div>
+        </motion.div>
 
         {/* Actions Row: Resume | View my work | Divider | Social icons */}
         <motion.div

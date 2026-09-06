@@ -76,7 +76,7 @@ export const Skills: React.FC = () => {
                 hidden: { opacity: 0, y: 8 },
                 visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
               }}
-              whileHover={{ y: -3, scale: 1.03, transition: { duration: 0.15 } }}
+              whileHover={{ y: -1.5, scale: 1.02, transition: { duration: 0.18, ease: [0.16, 1, 0.3, 1] } }}
               whileTap={{ scale: 0.98 }}
             >
               {renderToolIcon(skill)}
