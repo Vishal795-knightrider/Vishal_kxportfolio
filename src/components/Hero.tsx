@@ -105,7 +105,9 @@ export const Hero: React.FC = () => {
             visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
           }}
         >
-          I build fast, thoughtful digital products—from full-stack and real-time web apps to useful NLP/AI systems. I care about clear interfaces, dependable backends, and code that remains easy to read.
+        Full Stack Developer building modern web applications and exploring intelligent systems with AI.
+        <br />
+        React · Next.js · Node.js · Express · MongoDB · PostgreSQL · ML · AI
         </motion.p>
 
         {/* Actions Row: Resume | View my work | Divider | Social icons */}
