@@ -92,5 +92,23 @@ export const projects: Project[] = [
       githubMuted: true,
       githubMutedTitle: 'Not public yet'
     }
+  },
+  {
+    id: 'framegit',
+    title: 'FrameGit',
+    year: '2026',
+    categories: ['full stack', 'frontend'],
+    description: 'A version-control platform for video editors and designers, bringing branching, visual file comparison, and timestamped feedback to creative workflows.',
+    badges: {
+      status: 'progress',
+      statusText: 'IN PROGRESS',
+      pillText: 'CONCEPT PREVIEW'
+    },
+    notice: 'Links will be published when the project ships.',
+    tags: ['React', 'Node.js', 'Express', 'Git'],
+    links: {
+      githubMuted: true,
+      githubMutedTitle: 'Not public yet'
+    }
   }
 ];

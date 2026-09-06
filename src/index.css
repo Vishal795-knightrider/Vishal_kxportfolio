@@ -923,10 +923,6 @@ body.dark .pixel-box-on {
   display: flex;
 }
 
-.project-item-full {
-  grid-column: 1 / -1;
-}
-
 .project-card {
   width: 100%;
   background: var(--surface);
@@ -2142,10 +2138,6 @@ body.dark .contact-pill-animated:hover {
   .projects-grid {
     grid-template-columns: 1fr;
     gap: 18px;
-  }
-
-  .project-item-full {
-    grid-column: auto;
   }
 
   .project-card {

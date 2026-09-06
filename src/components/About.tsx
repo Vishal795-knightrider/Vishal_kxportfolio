@@ -17,17 +17,13 @@ export const About: React.FC = () => {
         <div className="about-text-content">
           <p>
             Hey, I am a <strong>Full Stack Engineer</strong> who enjoys <strong>building things from scratch</strong> and figuring out how everything works together.
-          </p>
-
-          <p>
+            <br/>
             Started with <strong>HTML and CSS</strong>, then moved to building small <strong>React projects</strong> and gradually into <strong>full stack development</strong> with Node.js, Express, databases, and REST APIs. I have been working on projects where I can handle both the <strong>UI and the backend</strong> and understand how everything connects.
           </p>
 
           <p>
             Recently, I’ve also been getting into <strong>ML and AI</strong>, experimenting with how these technologies can be used in actual products rather than just building demos.
-          </p>
-
-          <p>
+            <br/>
             I’ve also completed a <strong>3 month Full Stack Development internship</strong>, where I got to work with a team, understand how development works in a real environment, and get hands-on experience with tasks given by the manager.
           </p>
 

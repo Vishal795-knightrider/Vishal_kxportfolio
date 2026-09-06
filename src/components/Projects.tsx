@@ -52,7 +52,7 @@ export const Projects: React.FC = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.96 }}
                 transition={{ duration: 0.2 }}
-                className={`project-grid-item ${project.id === 'resonology-ai' ? 'project-item-full' : ''}`}
+                className="project-grid-item"
               >
                 <ProjectCard project={project} />
               </motion.div>
