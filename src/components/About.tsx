@@ -16,52 +16,25 @@ export const About: React.FC = () => {
 
         <div className="about-text-content">
           <p>
-            Hey, I'm Vishal — a full stack developer from Ghaziabad who loves building clean, modern products where design, functionality, and even the smallest details matter. Most of what I know came from shipping: small React pages first, then MERN apps, then systems that had to stay in sync across many users at once.
+            Hey, I am a Full Stack Engineer who enjoys building things from scratch and figuring out how everything works together.
           </p>
 
           <p>
-            Lately my work sits between two interests: full-stack product engineering and applied machine learning. On one side I'm wiring up APIs, databases and interfaces; on the other I'm working with text — similarity, scoring, and getting NLP models to say something genuinely useful.
+            Started with HTML and CSS, then moved to building small React projects and gradually into full stack development with Node.js, Express, databases, and REST APIs. I have been working on projects where I can handle both the UI and the backend and understand how everything connects.
           </p>
 
           <p>
-            I don't ship junk. Maintainability isn't optional. And I build best when I'm curious.
+            Recently, I’ve also been getting into ML and AI, experimenting with how these technologies can be used in actual products rather than just building demos.
+          </p>
+
+          <p>
+            I’ve also completed a 3 month Full Stack Development internship, where I got to work with a team, understand how development works in a real environment, and get hands-on experience with tasks given by the manager.
+          </p>
+
+          <p>
+            Still learning... still building... and trying to get better with every technology I work with.
           </p>
         </div>
-
-        {/* Developer Snapshot Card */}
-        <motion.div
-          className="dev-snapshot-card"
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.45, delay: 0.1 }}
-          whileHover={{ y: -2 }}
-        >
-          <div className="snapshot-label">DEVELOPER SNAPSHOT</div>
-          <div className="snapshot-grid">
-            <div className="snapshot-col">
-              <div className="snapshot-item">
-                <span className="snapshot-bullet">•</span>
-                <span>Building products.</span>
-              </div>
-              <div className="snapshot-item">
-                <span className="snapshot-bullet">•</span>
-                <span>Shipping consistently.</span>
-              </div>
-            </div>
-
-            <div className="snapshot-col">
-              <div className="snapshot-item">
-                <span className="snapshot-bullet">•</span>
-                <span>Learning technologies.</span>
-              </div>
-              <div className="snapshot-item">
-                <span className="snapshot-bullet">•</span>
-                <span>Obsessed with clean code.</span>
-              </div>
-            </div>
-          </div>
-        </motion.div>
       </div>
     </motion.section>
   );
