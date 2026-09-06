@@ -16,23 +16,23 @@ export const About: React.FC = () => {
 
         <div className="about-text-content">
           <p>
-            Hey, I am a Full Stack Engineer who enjoys building things from scratch and figuring out how everything works together.
+            Hey, I am a <strong>Full Stack Engineer</strong> who enjoys <strong>building things from scratch</strong> and figuring out how everything works together.
           </p>
 
           <p>
-            Started with HTML and CSS, then moved to building small React projects and gradually into full stack development with Node.js, Express, databases, and REST APIs. I have been working on projects where I can handle both the UI and the backend and understand how everything connects.
+            Started with <strong>HTML and CSS</strong>, then moved to building small <strong>React projects</strong> and gradually into <strong>full stack development</strong> with Node.js, Express, databases, and REST APIs. I have been working on projects where I can handle both the <strong>UI and the backend</strong> and understand how everything connects.
           </p>
 
           <p>
-            Recently, I’ve also been getting into ML and AI, experimenting with how these technologies can be used in actual products rather than just building demos.
+            Recently, I’ve also been getting into <strong>ML and AI</strong>, experimenting with how these technologies can be used in actual products rather than just building demos.
           </p>
 
           <p>
-            I’ve also completed a 3 month Full Stack Development internship, where I got to work with a team, understand how development works in a real environment, and get hands-on experience with tasks given by the manager.
+            I’ve also completed a <strong>3 month Full Stack Development internship</strong>, where I got to work with a team, understand how development works in a real environment, and get hands-on experience with tasks given by the manager.
           </p>
 
-          <p>
-            Still learning... still building... and trying to get better with every technology I work with.
+          <p className="about-closing-statement">
+            <strong>Still learning... still building...</strong> and trying to get better with every technology I work with.
           </p>
         </div>
       </div>

@@ -847,15 +847,26 @@ body.dark .pixel-box-on {
 .about-text-content {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 18px;
   font-size: 0.94rem;
-  line-height: 1.72;
+  line-height: 1.75;
   color: var(--text-secondary);
   margin-top: 14px;
 }
 
 .about-text-content p {
   max-width: 730px;
+}
+
+.about-text-content strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.about-text-content .about-closing-statement {
+  margin-top: 4px;
+  font-size: 0.96rem;
+  line-height: 1.75;
 }
 
 /* ==========================================================================
