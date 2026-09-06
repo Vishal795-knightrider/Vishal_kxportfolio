@@ -41,7 +41,7 @@ export const experience: ExperienceItem[] = [
     builtProjectsTitle: 'What I built at IISPPR',
     builtProjects: [
       {
-        title: 'IISPPR Redesign (DXZO)',
+        title: 'Book Section 1',
         url: 'https://iisppr-redesign-dxzo.vercel.app/'
       },
       {
@@ -49,11 +49,11 @@ export const experience: ExperienceItem[] = [
         url: 'https://iisppr-redesign.vercel.app/'
       },
       {
-        title: 'IISPPR Redesign (F6JM)',
+        title: 'Book Section 2',
         url: 'https://iisppr-redesign-f6jm.vercel.app/'
       },
       {
-        title: 'IISPPR Phi',
+        title: 'Final Redesign',
         url: 'https://iisppr-phi.vercel.app/'
       }
     ]

@@ -125,18 +125,13 @@ export const Experience: React.FC = () => {
                                 rel="noopener noreferrer"
                                 className="exp-project-link-card"
                               >
-                                <div className="exp-project-title-row">
-                                  <span className="exp-project-title">
-                                    {project.title}
-                                  </span>
-                                  <ExternalLink
-                                    className="exp-project-icon"
-                                    size={14}
-                                  />
-                                </div>
-                                <span className="exp-project-url">
-                                  {project.url}
+                                <span className="exp-project-title">
+                                  {project.title}
                                 </span>
+                                <ExternalLink
+                                  className="exp-project-icon"
+                                  size={14}
+                                />
                               </a>
                             </div>
                           );

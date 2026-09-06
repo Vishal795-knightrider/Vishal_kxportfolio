@@ -1435,20 +1435,14 @@ body.light .exp-timeline-item {
 /* Project card link */
 .exp-project-link-card {
   margin-left: 38px;
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   text-decoration: none;
   cursor: pointer;
   padding: 1px 4px;
   border-radius: var(--radius-sm);
   transition: transform 0.15s ease;
-}
-
-.exp-project-title-row {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
 }
 
 .exp-project-title {
@@ -1467,15 +1461,6 @@ body.light .exp-timeline-item {
   flex-shrink: 0;
 }
 
-.exp-project-url {
-  font-family: var(--sans);
-  font-size: 0.81rem;
-  color: var(--text-muted);
-  line-height: 1.35;
-  transition: color 0.15s ease;
-  word-break: break-all;
-}
-
 /* Interactivity and Hover states */
 .exp-project-link-card:hover .exp-project-title {
   color: #ffffff;
@@ -1488,10 +1473,6 @@ body.light .exp-project-link-card:hover .exp-project-title {
 .exp-project-link-card:hover .exp-project-icon {
   color: var(--text-primary);
   transform: translate(2px, -2px);
-}
-
-.exp-project-link-card:hover .exp-project-url {
-  color: var(--text-secondary);
 }
 
 .exp-tree-item:hover .exp-branch-dot {
