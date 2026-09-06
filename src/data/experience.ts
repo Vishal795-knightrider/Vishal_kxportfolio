@@ -1,5 +1,10 @@
 import iispprLogo from '../assets/images/iisppr-logo.png';
 
+export interface ExperienceProject {
+  title: string;
+  url: string;
+}
+
 export interface ExperienceItem {
   company: string;
   role: string;
@@ -9,6 +14,8 @@ export interface ExperienceItem {
   verifyUrl?: string;
   bullets: string[];
   tags: string[];
+  builtProjectsTitle?: string;
+  builtProjects?: ExperienceProject[];
 }
 
 export const experience: ExperienceItem[] = [
@@ -18,7 +25,6 @@ export const experience: ExperienceItem[] = [
     employmentType: 'PART-TIME',
     duration: 'June 2026 – August 2026',
     logo: iispprLogo,
-    verifyUrl: 'https://iisppr.in',
     bullets: [
       'Built the Book section of the website using Framer Motion, focusing on smooth interactions and animations.',
       'Worked with the team on assigned development tasks and contributed to the website development.',
@@ -31,6 +37,25 @@ export const experience: ExperienceItem[] = [
       'MongoDB',
       'Tailwind CSS',
       'Framer Motion'
+    ],
+    builtProjectsTitle: 'What I built at IISPPR',
+    builtProjects: [
+      {
+        title: 'IISPPR Redesign (DXZO)',
+        url: 'https://iisppr-redesign-dxzo.vercel.app/'
+      },
+      {
+        title: 'IISPPR Redesign',
+        url: 'https://iisppr-redesign.vercel.app/'
+      },
+      {
+        title: 'IISPPR Redesign (F6JM)',
+        url: 'https://iisppr-redesign-f6jm.vercel.app/'
+      },
+      {
+        title: 'IISPPR Phi',
+        url: 'https://iisppr-phi.vercel.app/'
+      }
     ]
   }
 ];

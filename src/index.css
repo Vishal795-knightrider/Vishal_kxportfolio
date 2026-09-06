@@ -1164,9 +1164,19 @@ body.dark .pixel-box-on {
 }
 
 .exp-timeline-item {
+  --rail-w: 28px;
+  --rail-gap: 16px;
+  --rail-offset: calc((var(--rail-w) / 2) + var(--rail-gap));
+  --tree-line: rgba(255, 255, 255, 0.2);
+  --tree-dot: #71717a;
   display: flex;
-  gap: 16px;
+  gap: var(--rail-gap);
   position: relative;
+}
+
+body.light .exp-timeline-item {
+  --tree-line: rgba(0, 0, 0, 0.16);
+  --tree-dot: #8c8a82;
 }
 
 .exp-timeline-rail {
@@ -1174,12 +1184,12 @@ body.dark .pixel-box-on {
   flex-direction: column;
   align-items: center;
   flex-shrink: 0;
-  width: 28px;
+  width: var(--rail-w);
 }
 
 .exp-timeline-marker {
-  width: 28px;
-  height: 28px;
+  width: var(--rail-w);
+  height: var(--rail-w);
   border-radius: 50%;
   overflow: hidden;
   border: 1px solid var(--border);
@@ -1208,7 +1218,7 @@ body.dark .pixel-box-on {
 .exp-timeline-line {
   width: 1px;
   flex: 1;
-  background: var(--border);
+  background: var(--tree-line);
   margin-top: 8px;
   min-height: 48px;
 }
@@ -1219,6 +1229,22 @@ body.dark .pixel-box-on {
   flex-direction: column;
   padding-bottom: 8px;
   max-width: 720px;
+}
+
+.exp-main-body {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.exp-body-connector-line {
+  position: absolute;
+  left: calc(-1 * var(--rail-offset));
+  top: 34px;
+  bottom: 0;
+  width: 1px;
+  background: var(--tree-line);
+  pointer-events: none;
 }
 
 .exp-company-name {
@@ -1295,41 +1321,189 @@ body.dark .pixel-box-on {
   margin-top: 16px;
 }
 
-.exp-links-row {
+/* Built Projects Tree Section */
+.exp-built-section {
   display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 16px;
+  flex-direction: column;
+  margin-top: 26px;
+  position: relative;
 }
 
-.exp-site-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-family: var(--mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.04em;
-  color: var(--text-secondary);
-  padding: 4px 10px;
-  border-radius: var(--radius-sm);
-  background: var(--surface-subtle);
-  border: 1px solid var(--border-subtle);
-  transition: all 0.15s ease;
+.exp-built-heading-wrap {
+  position: relative;
+  margin-bottom: 20px;
 }
 
-.exp-site-link:hover {
+.exp-heading-connector-line {
+  position: absolute;
+  left: calc(-1 * var(--rail-offset));
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--tree-line);
+  pointer-events: none;
+}
+
+.exp-built-heading {
+  font-family: var(--sans);
+  font-size: 1rem;
+  font-weight: 600;
   color: var(--text-primary);
-  border-color: var(--border-hover);
-  background: var(--surface);
+  letter-spacing: -0.01em;
+  margin: 0;
+  line-height: 1.4;
 }
 
-.exp-site-link .arrow {
-  font-size: 0.8rem;
+.exp-built-tree {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.exp-tree-item {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  padding-bottom: 22px;
+}
+
+.exp-tree-item.is-last {
+  padding-bottom: 4px;
+}
+
+.exp-tree-branch {
+  position: absolute;
+  left: calc(-1 * var(--rail-offset));
+  top: 0;
+  bottom: 0;
+  width: calc(var(--rail-offset) + 26px);
+  pointer-events: none;
+}
+
+/* Branch vertical line + horizontal arm for non-last items */
+.exp-branch-stem {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--tree-line);
+}
+
+.exp-branch-stem::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 100%;
+  height: 1px;
+  background: var(--tree-line);
+}
+
+/* Branch node dot */
+.exp-branch-dot {
+  position: absolute;
+  right: 0;
+  top: 7px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--tree-dot);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Last branch item curves 90 degrees and terminates */
+.exp-tree-item.is-last .exp-tree-branch {
+  bottom: auto;
+  height: 11px;
+}
+
+.exp-tree-item.is-last .exp-branch-stem {
+  bottom: auto;
+  height: 11px;
+  width: 100%;
+  background: transparent;
+  border-left: 1px solid var(--tree-line);
+  border-bottom: 1px solid var(--tree-line);
+  border-bottom-left-radius: 10px;
+}
+
+.exp-tree-item.is-last .exp-branch-stem::after {
+  display: none;
+}
+
+/* Project card link */
+.exp-project-link-card {
+  margin-left: 38px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  text-decoration: none;
+  cursor: pointer;
+  padding: 1px 4px;
+  border-radius: var(--radius-sm);
   transition: transform 0.15s ease;
 }
 
-.exp-site-link:hover .arrow {
-  transform: translate(1px, -1px);
+.exp-project-title-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.exp-project-title {
+  font-family: var(--sans);
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  line-height: 1.4;
+  letter-spacing: -0.005em;
+  transition: color 0.15s ease;
+}
+
+.exp-project-icon {
+  color: var(--text-muted);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), color 0.15s ease;
+  flex-shrink: 0;
+}
+
+.exp-project-url {
+  font-family: var(--sans);
+  font-size: 0.81rem;
+  color: var(--text-muted);
+  line-height: 1.35;
+  transition: color 0.15s ease;
+  word-break: break-all;
+}
+
+/* Interactivity and Hover states */
+.exp-project-link-card:hover .exp-project-title {
+  color: #ffffff;
+}
+
+body.light .exp-project-link-card:hover .exp-project-title {
+  color: #000000;
+}
+
+.exp-project-link-card:hover .exp-project-icon {
+  color: var(--text-primary);
+  transform: translate(2px, -2px);
+}
+
+.exp-project-link-card:hover .exp-project-url {
+  color: var(--text-secondary);
+}
+
+.exp-tree-item:hover .exp-branch-dot {
+  background: var(--text-primary);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.45);
+  transform: scale(1.25);
+}
+
+body.light .exp-tree-item:hover .exp-branch-dot {
+  background: var(--text-primary);
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+  transform: scale(1.25);
 }
 
 /* ==========================================================================
@@ -2243,6 +2417,8 @@ body.dark .contact-pill-animated:hover {
 
   /* Experience Section (Timeline on mobile) */
   .exp-timeline-item {
+    --rail-w: 24px;
+    --rail-gap: 12px;
     gap: 12px;
   }
 
@@ -2253,6 +2429,14 @@ body.dark .contact-pill-animated:hover {
   .exp-timeline-marker {
     width: 24px;
     height: 24px;
+  }
+
+  .exp-tree-branch {
+    width: calc(var(--rail-offset) + 20px);
+  }
+
+  .exp-project-link-card {
+    margin-left: 30px;
   }
 
   .exp-meta-row {
