@@ -125,6 +125,18 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
           </span>
         </div>
 
+        {/* Short 1–2 line description */}
+        <p className="gallery-item-desc">{project.description}</p>
+
+        {/* Compact Tech Stack Pills */}
+        <div className="gallery-item-tags">
+          {project.tags.map((tag) => (
+            <span key={tag} className="gallery-tag-pill">
+              {tag}
+            </span>
+          ))}
+        </div>
+
         {/* Action links row: Live ↗ and GitHub ↗ for live projects */}
         {(project.links.live || project.links.github) && (
           <div className="gallery-item-links">

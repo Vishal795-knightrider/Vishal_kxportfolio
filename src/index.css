@@ -1212,6 +1212,41 @@ body.light .concept-branch-line::before {
   box-shadow: 0 0 6px var(--accent-green);
 }
 
+/* Short Project Description */
+.gallery-item-desc {
+  font-family: var(--sans);
+  font-size: 0.81rem;
+  color: var(--text-secondary);
+  line-height: 1.48;
+  margin: 2px 0 6px;
+}
+
+/* Compact Tech Stack Pills */
+.gallery-item-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-bottom: 6px;
+}
+
+.gallery-tag-pill {
+  font-family: var(--sans);
+  font-size: 0.67rem;
+  font-weight: 500;
+  padding: 1.5px 6.5px;
+  border-radius: 4px;
+  background: var(--surface-subtle);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  line-height: 1.35;
+}
+
+body.dark .gallery-tag-pill {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.08);
+  color: var(--text-secondary);
+}
+
 /* Action Links: Live ↗ and GitHub ↗ */
 .gallery-item-links {
   display: flex;
