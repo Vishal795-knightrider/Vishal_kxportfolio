@@ -99,7 +99,7 @@ export const ContactCTA: React.FC = () => {
             </motion.a>
 
             <motion.a
-              href="https://drive.google.com/file/d/1Xexample/view"
+              href="/resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="contact-pill-btn contact-pill-animated"
