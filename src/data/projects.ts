@@ -1,4 +1,3 @@
-import resonologyPreview from '../assets/images/resonology-preview.jpg';
 
 export interface Project {
   id: string;
@@ -64,7 +63,7 @@ export const projects: Project[] = [
       statusText: 'IN PROGRESS',
       pillText: 'CONCEPT PREVIEW'
     },
-    image: resonologyPreview,
+    image: '/images/resonology-ai.png',
     links: {}
   },
   {
