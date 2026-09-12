@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { Film, GitBranch, Layers } from 'lucide-react';
 import { Project } from '../data/projects';
 
@@ -8,35 +8,131 @@ interface ProjectCardProps {
 
 export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const [isVideoReady, setIsVideoReady] = useState(false);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+  const [hasVideoError, setHasVideoError] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const hasVideo = Boolean(project.video);
   const isLive = project.badges.status === 'live';
 
-  // Handle video hover playback
+  // Video is only considered active and visible when hovered, ready, playing, and has no error
+  const isVideoActive = Boolean(
+    hasVideo &&
+    isHovered &&
+    isVideoReady &&
+    isVideoPlaying &&
+    !hasVideoError
+  );
+
+  // The static image must remain visible whenever the video is not active
+  const isImageVisible = !isVideoActive;
+
+  // Reset video state if the video source changes
   useEffect(() => {
+    setIsVideoReady(false);
+    setIsVideoPlaying(false);
+    setHasVideoError(false);
+  }, [project.video]);
+
+  // Ensure HTML5 video DOM element has muted and defaultMuted (required by browsers for autoplay)
+  useEffect(() => {
+    const video = videoRef.current;
+    if (video) {
+      video.muted = true;
+      video.defaultMuted = true;
+    }
+  }, [project.video]);
+
+  // Handle mouse enter: trigger playback safely
+  const handleMouseEnter = useCallback(() => {
+    setIsHovered(true);
+
+    const video = videoRef.current;
+    if (!video || !hasVideo || hasVideoError) return;
+
+    video.muted = true;
+
+    // Reset currentTime to 0 on enter if ready
+    try {
+      if (video.readyState >= 1 && video.currentTime !== 0) {
+        video.currentTime = 0;
+      }
+    } catch {
+      // ignore
+    }
+
+    // Attempt video playback safely
+    const playPromise = video.play();
+    if (playPromise !== undefined) {
+      playPromise.catch((error: unknown) => {
+        const err = error as { name?: string };
+        // AbortError is normal when user unhovers quickly before play() resolves
+        if (err?.name === 'AbortError') {
+          return;
+        }
+        console.warn(`[ProjectCard] Video play failed for "${project.title}":`, error);
+        setHasVideoError(true);
+        setIsVideoPlaying(false);
+      });
+    }
+  }, [hasVideo, hasVideoError, project.title]);
+
+  // Handle mouse leave: pause, reset time, hide video
+  const handleMouseLeave = useCallback(() => {
+    setIsHovered(false);
+    setIsVideoPlaying(false);
+
     const video = videoRef.current;
     if (!video || !hasVideo) return;
 
-    if (isHovered) {
-      video.currentTime = 0;
-      const playPromise = video.play();
-      if (playPromise !== undefined) {
-        playPromise.catch(() => {
-          // Gracefully handle browser auto-play policy rejections
-        });
-      }
-    } else {
+    try {
       video.pause();
-      video.currentTime = 0;
+      if (video.readyState >= 1 && video.currentTime !== 0) {
+        video.currentTime = 0;
+      }
+    } catch {
+      // ignore
     }
-  }, [isHovered, hasVideo]);
+  }, [hasVideo]);
+
+  // Video event handlers
+  const handleLoadedMetadata = () => {
+    setIsVideoReady(true);
+  };
+
+  const handleCanPlay = () => {
+    setIsVideoReady(true);
+  };
+
+  const handlePlaying = () => {
+    setIsVideoPlaying(true);
+    setIsVideoReady(true);
+  };
+
+  const handlePause = () => {
+    setIsVideoPlaying(false);
+  };
+
+  const handleVideoError = (e: React.SyntheticEvent<HTMLVideoElement, Event>) => {
+    console.warn(`[ProjectCard] Video failed to load for "${project.title}":`, project.video, e);
+    setHasVideoError(true);
+    setIsVideoReady(false);
+    setIsVideoPlaying(false);
+  };
+
+  const handleEnded = () => {
+    if (isHovered && videoRef.current) {
+      videoRef.current.currentTime = 0;
+      videoRef.current.play().catch(() => {});
+    }
+  };
 
   return (
     <div
       className="gallery-item"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       {/* 16:10 Visual Media Preview (Image or Video) */}
       <div className="gallery-media-container">
@@ -91,7 +187,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
               <img
                 src={project.image}
                 alt={`${project.title} preview`}
-                className={`gallery-media-img ${hasVideo && isHovered ? 'media-hidden' : ''}`}
+                className={`gallery-media-img ${!isImageVisible ? 'media-hidden' : ''}`}
                 loading="lazy"
               />
             )}
@@ -100,11 +196,18 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
               <video
                 ref={videoRef}
                 src={project.video}
+                poster={project.image}
                 muted
                 loop
                 playsInline
                 preload="metadata"
-                className={`gallery-media-video ${isHovered ? 'video-active' : ''}`}
+                onLoadedMetadata={handleLoadedMetadata}
+                onCanPlay={handleCanPlay}
+                onPlaying={handlePlaying}
+                onPause={handlePause}
+                onError={handleVideoError}
+                onEnded={handleEnded}
+                className={`gallery-media-video ${isVideoActive ? 'video-active' : ''}`}
               />
             )}
           </>
