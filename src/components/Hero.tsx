@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MapPin, Mail, ArrowUpRight, Lightbulb, Rocket, Wrench, Sparkles } from 'lucide-react';
+import { MapPin, Mail, Lightbulb, Rocket, Sparkles } from 'lucide-react';
 import vishalAvatar from '../assets/images/vishal-profile.jpg';
 
 // Minimal custom X (Twitter) icon
@@ -126,22 +126,17 @@ export const Hero: React.FC = () => {
             I build full-stack products from{' '}
             <span className="hero-highlight-pill group">
               <span className="highlight-text">idea</span>
-              <span className="highlight-emoji">💡</span>
+              <Lightbulb size={13} className="highlight-icon text-amber-400" />
             </span>{' '}
             to{' '}
             <span className="hero-highlight-pill group">
               <span className="highlight-text">deployment</span>
-              <span className="highlight-emoji">🚀</span>
+              <Rocket size={13} className="highlight-icon text-amber-500" />
             </span>{' '}
-            and{' '}
-            <span className="hero-highlight-pill group">
-              <span className="highlight-text">maintenance</span>
-              <span className="highlight-emoji">🔧</span>
-            </span>
-            . I care about{' '}
+            and maintenance. I care about{' '}
             <span className="hero-highlight-pill group">
               <span className="highlight-text">clean UI</span>
-              <span className="highlight-emoji">✨</span>
+              <Sparkles size={13} className="highlight-icon text-amber-400" />
             </span>
             , solid APIs, and making things actually work.
           </p>
@@ -153,14 +148,6 @@ export const Hero: React.FC = () => {
             <strong className="tech-strong">MongoDB</strong>, and a bit of{' '}
             <strong className="tech-strong">AI/ML</strong>.
           </p>
-
-          <div className="hero-hire-row">
-            <span>Got something in mind? </span>
-            <a href="#contact" className="hero-lets-talk-link">
-              Let's talk
-              <ArrowUpRight size={13} className="inline-block ml-0.5" />
-            </a>
-          </div>
         </div>
 
         {/* Location & Live Clock Bar */}
