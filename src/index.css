@@ -34,13 +34,13 @@
   --accent-amber-bg: #fff7ed;
   --accent-amber-border: #fed7aa;
 
-  --accent-coral: #ff5722;
-  --accent-orange: #f97316;
+  --accent-signature: #6366f1;
+  --accent-signature-glow: rgba(99, 102, 241, 0.25);
 
   --serif: 'Newsreader', Georgia, Cambria, serif;
   --sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --mono: 'JetBrains Mono', Menlo, Monaco, Consolas, monospace;
-  --handwriting: 'Caveat', cursive, sans-serif;
+  --handwriting: 'Shadows Into Light', 'Architects Daughter', cursive, sans-serif;
 
   --container-width: 720px;
   --radius-sm: 6px;
@@ -87,8 +87,8 @@ body.dark {
   --accent-amber-bg: rgba(249, 115, 22, 0.12);
   --accent-amber-border: rgba(249, 115, 22, 0.3);
 
-  --accent-coral: #ff6b4a;
-  --accent-orange: #fb923c;
+  --accent-signature: #818cf8;
+  --accent-signature-glow: rgba(129, 140, 248, 0.45);
 
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
   --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.5);
@@ -351,7 +351,7 @@ body.dark .nav-container--scrolled {
 }
 
 .brand-dot {
-  color: var(--accent-orange, #f97316);
+  color: var(--accent-signature, #6366f1);
   font-weight: 900;
   margin-left: 2px;
 }
@@ -1006,32 +1006,103 @@ body.dark .visitor-handwritten-sticker {
   transform: translateX(-50%) translateY(0);
 }
 
-/* Footer Handwritten Visitor Badge */
-.footer-handwritten-badge {
+/* Retro Mechanical Stamp / Odometer Visitor Counter Strip (matching user photo) */
+.footer-visitor-stamp-wrap {
   position: relative;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  background: none;
-  border: none;
+  gap: 12px;
   cursor: pointer;
-  padding: 6px 12px;
-  font-family: var(--handwriting, 'Caveat', cursive);
+  user-select: none;
+  padding: 8px 12px;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.footer-visitor-label {
+  font-family: var(--handwriting, 'Shadows Into Light', 'Caveat', cursive);
   font-size: 1.55rem;
   font-weight: 700;
-  color: var(--accent-orange, #f97316);
-  transform: rotate(-3deg);
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  filter: drop-shadow(0 1px 3px rgba(249, 115, 22, 0.18));
+  color: var(--accent-signature, #6366f1);
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  transform: rotate(-2deg);
+  transform-origin: right center;
+  transition: transform 0.2s ease, filter 0.2s ease;
+  filter: drop-shadow(0 1px 3px var(--accent-signature-glow));
 }
 
-body.dark .footer-handwritten-badge {
-  color: #fb923c;
-  filter: drop-shadow(0 1px 4px rgba(251, 146, 60, 0.3));
+body.dark .footer-visitor-label {
+  color: var(--accent-signature, #818cf8);
+  filter: drop-shadow(0 2px 8px var(--accent-signature-glow));
 }
 
-.footer-handwritten-text {
+.footer-hash-symbol {
+  font-weight: 700;
+  color: inherit;
+  margin-left: 1px;
+}
+
+/* Outer sticker strip containing the digit cells */
+.retro-counter-strip {
+  display: inline-flex;
+  align-items: center;
+  background-color: #72a490; /* Vintage sage teal/green matching user reference photo */
+  border: 2px solid #18181b;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.9), 0 2px 8px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transform: rotate(-1.5deg);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease;
+}
+
+.footer-visitor-stamp-wrap:hover .retro-counter-strip {
+  transform: rotate(0deg) scale(1.05);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 1), 0 4px 16px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+body.dark .retro-counter-strip {
+  border-color: #111111;
+  box-shadow: 0 0 0 2.5px rgba(255, 255, 255, 0.15), 0 4px 14px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+body.dark .footer-visitor-stamp-wrap:hover .retro-counter-strip {
+  box-shadow: 0 0 0 2.5px rgba(255, 255, 255, 0.25), 0 6px 20px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* Individual digit cell */
+.retro-counter-cell {
+  width: 24px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 1.8px solid #18181b;
+  background-color: #72a490;
+  position: relative;
+}
+
+.retro-counter-cell:last-child {
+  border-right: none;
+}
+
+body.dark .retro-counter-cell {
+  border-right-color: #111111;
+}
+
+/* Handwritten / rounded white number inside cell */
+.retro-digit-char {
+  font-family: var(--handwriting, 'Architects Daughter', 'Caveat', cursive);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
   display: inline-block;
+  transform: translateY(-0.5px);
+  user-select: none;
 }
 
 .visitor-toast {
