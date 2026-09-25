@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Menu, X } from 'lucide-react';
+import { Search, Moon, Sun, Menu, X } from 'lucide-react';
 
 interface NavbarProps {
   isLight: boolean;
@@ -19,7 +19,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 10);
+    const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -29,47 +29,47 @@ export const Navbar: React.FC<NavbarProps> = ({
   };
 
   return (
-    <header className={`nav-outer ${scrolled ? 'nav-outer--scrolled' : ''}`}>
-      <div className="nav-container">
-        {/* Brand Logo */}
-        <a href="#" className="brand-logo">
-          vishal<span className="brand-dot">.</span>
+    <header className="nav-outer">
+      <div className={`nav-container ${scrolled ? 'nav-container--scrolled' : ''}`}>
+        {/* Brand Logo with Cursive Font and Colored Dot */}
+        <a href="#hero" className="brand-logo" aria-label="Vishal home">
+          <span>vishal</span>
+          <span className="brand-dot">.</span>
         </a>
 
-        {/* Center Links */}
+        {/* Center Links (Matching reference: About, Work, Lab, Contact) */}
         <nav className="nav-links-desktop" aria-label="Main Navigation">
-          <a href="#about" className="nav-link-item">about</a>
-          <a href="#projects" className="nav-link-item">projects</a>
-          <a href="#experience" className="nav-link-item">experience</a>
-          <a href="#github-activity" className="nav-link-item">github</a>
-          <a href="#education" className="nav-link-item">education</a>
-          <a href="#contact" className="nav-link-item">contact</a>
+          <a href="#about" className="nav-link-item">About</a>
+          <a href="#projects" className="nav-link-item">Work</a>
+          <a href="#experience" className="nav-link-item">Lab</a>
+          <a href="#contact" className="nav-link-item">Contact</a>
         </nav>
 
-        {/* Right Controls: Compact Search + Pill Theme Toggle */}
+        {/* Right Action: Search, Theme Toggle, and "Get in Touch" Pill */}
         <div className="nav-actions">
           <button
             type="button"
-            className="nav-search-btn"
+            className="nav-icon-action-btn"
             onClick={onOpenSearch}
-            title="Search sections & projects (⌘K)"
-            aria-label="Search sections & projects (⌘K)"
+            title="Search (⌘K)"
+            aria-label="Search sections & projects"
           >
-            <Search size={13} className="search-icon" />
-            <span className="search-cmd-k">⌘K</span>
+            <Search size={14} />
           </button>
 
           <button
             type="button"
-            className={`theme-pill-switch ${isLight ? 'theme-pill--light' : 'theme-pill--dark'}`}
-            aria-label={isLight ? 'Switch to dark theme' : 'Switch to light theme'}
+            className="nav-icon-action-btn"
             onClick={handleToggleTheme}
             title={`Switch to ${isLight ? 'dark' : 'light'} mode`}
+            aria-label="Toggle theme"
           >
-            <span className="theme-switch-track" aria-hidden="true">
-              <span className="theme-switch-thumb" />
-            </span>
+            {isLight ? <Moon size={14} /> : <Sun size={14} />}
           </button>
+
+          <a href="#contact" className="nav-get-in-touch-btn">
+            Get in Touch
+          </a>
 
           <button
             type="button"
@@ -78,7 +78,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             aria-expanded={isMenuOpen}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
-            {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            {isMenuOpen ? <X size={18} /> : <Menu size={18} />}
           </button>
         </div>
       </div>
