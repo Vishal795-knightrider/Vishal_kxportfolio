@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MapPin, Mail, Sparkles, Rocket, Heart, ArrowUpRight } from 'lucide-react';
+import { MapPin, Mail, ArrowUpRight, Lightbulb, Rocket, Wrench, Sparkles } from 'lucide-react';
 import vishalAvatar from '../assets/images/vishal-profile.jpg';
 
 // Minimal custom X (Twitter) icon
@@ -123,34 +123,39 @@ export const Hero: React.FC = () => {
         {/* Narrative Bio with Modern Typographic Rhythm & Inline Badges */}
         <div className="hero-bio-flow">
           <p className="hero-bio-lead">
-            I build full products on my own, from the database up to{' '}
+            I build full-stack products from{' '}
+            <span className="hero-highlight-pill group">
+              <span className="highlight-text">idea</span>
+              <span className="highlight-emoji">💡</span>
+            </span>{' '}
+            to{' '}
             <span className="hero-highlight-pill group">
               <span className="highlight-text">deployment</span>
-              <Rocket size={14} className="highlight-icon text-amber-500" />
-            </span>
-            . I care a lot about the{' '}
+              <span className="highlight-emoji">🚀</span>
+            </span>{' '}
+            and{' '}
             <span className="hero-highlight-pill group">
-              <span className="highlight-text">small stuff</span>
-              <Sparkles size={14} className="highlight-icon text-amber-400" />
+              <span className="highlight-text">maintenance</span>
+              <span className="highlight-emoji">🔧</span>
             </span>
-            . Clean APIs, fast interfaces, and interactions that actually{' '}
+            . I care about{' '}
             <span className="hero-highlight-pill group">
-              <span className="highlight-text">feel right</span>
-              <Heart size={13} className="highlight-icon text-rose-500" />
+              <span className="highlight-text">clean UI</span>
+              <span className="highlight-emoji">✨</span>
             </span>
-            .
+            , solid APIs, and making things actually work.
           </p>
 
           <p className="hero-bio-tech">
-            I mostly work with <strong className="tech-strong">TypeScript</strong>,{' '}
+            I mostly work with <strong className="tech-strong">React</strong>,{' '}
             <strong className="tech-strong">Next.js</strong>,{' '}
-            <strong className="tech-strong">React</strong>,{' '}
-            <strong className="tech-strong">Node.js</strong>, and{' '}
-            <strong className="tech-strong">PostgreSQL / MongoDB</strong>.
+            <strong className="tech-strong">Node.js</strong>,{' '}
+            <strong className="tech-strong">MongoDB</strong>, and a bit of{' '}
+            <strong className="tech-strong">AI/ML</strong>.
           </p>
 
           <div className="hero-hire-row">
-            <span>Want to hire me? </span>
+            <span>Got something in mind? </span>
             <a href="#contact" className="hero-lets-talk-link">
               Let's talk
               <ArrowUpRight size={13} className="inline-block ml-0.5" />
