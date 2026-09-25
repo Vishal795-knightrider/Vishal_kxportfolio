@@ -12,7 +12,6 @@ import Certifications from './components/Certifications';
 import ContactCTA from './components/ContactCTA';
 import Footer from './components/Footer';
 import CommandPalette from './components/CommandPalette';
-import SectionDivider from './components/SectionDivider';
 
 export const App: React.FC = () => {
   // Default to light mode matching the screenshot, with full dark mode support
@@ -59,42 +58,26 @@ export const App: React.FC = () => {
         {/* HERO */}
         <Hero />
 
-        <SectionDivider />
-
         {/* ABOUT */}
         <About />
-
-        <SectionDivider />
 
         {/* PROJECTS */}
         <Projects />
 
-        <SectionDivider />
-
         {/* WORK EXPERIENCE */}
         <Experience />
-
-        <SectionDivider />
 
         {/* TECH STACK */}
         <Skills />
 
-        <SectionDivider />
-
         {/* GITHUB ACTIVITY */}
         <GithubActivity />
-
-        <SectionDivider />
 
         {/* EDUCATION */}
         <Education />
 
-        <SectionDivider />
-
         {/* CERTIFICATIONS */}
         <Certifications />
-
-        <SectionDivider />
 
         {/* CONTACT / HAVE AN IDEA? LET'S TALK */}
         <ContactCTA />
