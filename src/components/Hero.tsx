@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MapPin, Mail, Sparkles, Rocket, Heart, ArrowUpRight } from 'lucide-react';
+import { Mail, Sparkles, Rocket, Heart, ArrowUpRight } from 'lucide-react';
 import vishalAvatar from '../assets/images/vishal-profile.jpg';
-import { useVisitorCount } from '../hooks/useVisitorCount';
 
 // Minimal custom X (Twitter) icon
 const XIcon: React.FC<{ size?: number }> = ({ size = 16 }) => (
@@ -37,28 +36,7 @@ const ROLES = [
 ];
 
 export const Hero: React.FC = () => {
-  const [istTime, setIstTime] = useState('');
   const [roleIndex, setRoleIndex] = useState(0);
-  const { ordinalText } = useVisitorCount();
-
-  // Live IST Clock
-  useEffect(() => {
-    const updateTime = () => {
-      const now = new Date();
-      const istString = now.toLocaleTimeString('en-US', {
-        timeZone: 'Asia/Kolkata',
-        hour12: false,
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-      });
-      setIstTime(istString);
-    };
-
-    updateTime();
-    const interval = setInterval(updateTime, 1000);
-    return () => clearInterval(interval);
-  }, []);
 
   // Cycle role titles every 3.5 seconds
   useEffect(() => {
@@ -157,37 +135,6 @@ export const Hero: React.FC = () => {
               Let's talk
               <ArrowUpRight size={13} className="inline-block ml-0.5" />
             </a>
-            <span className="hero-dot-sep">·</span>
-            <span>Based in Ghaziabad, India.</span>
-          </div>
-        </div>
-
-        {/* Location & Live Clock + Hand-Written Tilted Visitor Stamp (matching Image 1) */}
-        <div className="hero-meta-location-block">
-          {/* Tilted Handwritten Visitor Count Sticker */}
-          <div className="visitor-sticker-container">
-            <motion.div
-              className="visitor-handwritten-sticker"
-              whileHover={{ rotate: 0, scale: 1.08 }}
-              transition={{ type: 'spring', stiffness: 400, damping: 20 }}
-              title="Real-time visitor badge"
-            >
-              you are #{ordinalText} visitor
-            </motion.div>
-          </div>
-
-          {/* Location & IST Clock Bar */}
-          <div className="hero-location-bar">
-            <div className="hero-location-item">
-              <MapPin size={14} className="hero-meta-icon" />
-              <span>Based in Ghaziabad, India · IST (UTC+5:30)</span>
-            </div>
-            {istTime && (
-              <div className="hero-ist-clock-pill">
-                <span className="clock-ping-dot" />
-                <span className="font-mono text-xs">{istTime} IST</span>
-              </div>
-            )}
           </div>
         </div>
 
