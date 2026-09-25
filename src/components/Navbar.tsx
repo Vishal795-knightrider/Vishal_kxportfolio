@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { flushSync } from 'react-dom';
 import { Search, Moon, Sun, Menu, X } from 'lucide-react';
 
 interface NavbarProps {
@@ -24,8 +25,70 @@ export const Navbar: React.FC<NavbarProps> = ({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleToggleTheme = () => {
-    setIsLight(!isLight);
+  const handleToggleTheme = (event: React.MouseEvent<HTMLButtonElement>) => {
+    // Check if browser supports modern View Transitions API
+    const isAppearanceTransition =
+      // @ts-ignore
+      typeof document !== 'undefined' &&
+      // @ts-ignore
+      typeof document.startViewTransition === 'function' &&
+      !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (!isAppearanceTransition) {
+      setIsLight(!isLight);
+      return;
+    }
+
+    const x = event.clientX;
+    const y = event.clientY;
+    const endRadius = Math.hypot(
+      Math.max(x, window.innerWidth - x),
+      Math.max(y, window.innerHeight - y)
+    );
+
+    const goingDark = isLight;
+    document.documentElement.dataset.themeTransition = goingDark ? 'to-dark' : 'to-light';
+
+    // @ts-ignore
+    const transition = document.startViewTransition(() => {
+      flushSync(() => {
+        const next = !isLight;
+        setIsLight(next);
+        if (next) {
+          document.documentElement.classList.add('light');
+          document.documentElement.classList.remove('dark');
+          document.body.classList.add('light');
+          document.body.classList.remove('dark');
+        } else {
+          document.documentElement.classList.add('dark');
+          document.documentElement.classList.remove('light');
+          document.body.classList.add('dark');
+          document.body.classList.remove('light');
+        }
+      });
+    });
+
+    transition.ready.then(() => {
+      const clipPath = [
+        `circle(0px at ${x}px ${y}px)`,
+        `circle(${endRadius}px at ${x}px ${y}px)`
+      ];
+
+      document.documentElement.animate(
+        {
+          clipPath: goingDark ? clipPath : [...clipPath].reverse()
+        },
+        {
+          duration: 400,
+          easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+          pseudoElement: goingDark ? '::view-transition-new(root)' : '::view-transition-old(root)'
+        }
+      );
+    });
+
+    transition.finished.finally(() => {
+      delete document.documentElement.dataset.themeTransition;
+    });
   };
 
   return (

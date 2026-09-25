@@ -59,6 +59,7 @@
   --gh-l4: #216e39;
 }
 
+html.dark,
 body.dark {
   color-scheme: dark;
   /* CLEAN MINIMALIST PURE BLACK PALETTE (vinitpatil.me style) */
@@ -102,6 +103,40 @@ body.dark {
 }
 
 /* ==========================================================================
+   VIEW TRANSITIONS API FOR THEME TOGGLE (vinitpatil.me circular ripple wipe)
+   ========================================================================== */
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+  will-change: clip-path;
+}
+
+/* Light to Dark: New Dark screen expands on top */
+html[data-theme-transition="to-dark"]::view-transition-old(root) {
+  z-index: 1;
+}
+html[data-theme-transition="to-dark"]::view-transition-new(root) {
+  z-index: 99999;
+}
+
+/* Dark to Light: Old Dark screen shrinks on top, revealing clean Light mode underneath */
+html[data-theme-transition="to-light"]::view-transition-old(root) {
+  z-index: 99999;
+}
+html[data-theme-transition="to-light"]::view-transition-new(root) {
+  z-index: 1;
+}
+
+/* Disable element-level CSS transitions during view transitions so GPU is 100% focused on smooth clip-path */
+html[data-theme-transition] *,
+html[data-theme-transition] *::before,
+html[data-theme-transition] *::after {
+  transition: none !important;
+}
+
+/* ==========================================================================
    BASE & RESET
    ========================================================================== */
 
@@ -134,7 +169,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
   position: relative;
-  transition: background-color 0.25s ease, color 0.25s ease;
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
@@ -444,22 +478,7 @@ body.dark .nav-container--scrolled {
   }
 }
 
-/* Smooth lag-free theme color transitions */
-body {
-  transition: background-color 0.25s ease, color 0.25s ease;
-}
 
-.nav-outer,
-.hero-card,
-.project-card,
-.contact-card,
-.gh-card,
-.site-footer,
-.skill-pill-card,
-.nav-search-btn,
-.theme-switch-track {
-  transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
-}
 
 /* Compact Search Button matching user image */
 .nav-search-btn {

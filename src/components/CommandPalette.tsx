@@ -75,7 +75,33 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
 
   const handleSelect = (item: typeof items[0]) => {
     if (item.action === 'toggleTheme') {
-      setIsLight(!isLight);
+      // @ts-ignore
+      if (typeof document !== 'undefined' && typeof document.startViewTransition === 'function') {
+        const x = window.innerWidth / 2;
+        const y = window.innerHeight / 2;
+        const endRadius = Math.hypot(x, y);
+        // @ts-ignore
+        const transition = document.startViewTransition(() => {
+          setIsLight(!isLight);
+        });
+        transition.ready.then(() => {
+          document.documentElement.animate(
+            {
+              clipPath: [
+                `circle(0px at ${x}px ${y}px)`,
+                `circle(${endRadius}px at ${x}px ${y}px)`
+              ]
+            },
+            {
+              duration: 520,
+              easing: 'cubic-bezier(0.25, 1, 0.5, 1)',
+              pseudoElement: '::view-transition-new(root)'
+            }
+          );
+        });
+      } else {
+        setIsLight(!isLight);
+      }
     } else if (item.href) {
       window.open(item.href, '_blank');
     } else if (item.sectionId) {
