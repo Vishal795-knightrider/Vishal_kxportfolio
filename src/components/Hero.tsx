@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Mail, Sparkles, Rocket, Heart, ArrowUpRight } from 'lucide-react';
+import { MapPin, Mail, Sparkles, Rocket, Heart, ArrowUpRight } from 'lucide-react';
 import vishalAvatar from '../assets/images/vishal-profile.jpg';
 
 // Minimal custom X (Twitter) icon
@@ -36,7 +36,27 @@ const ROLES = [
 ];
 
 export const Hero: React.FC = () => {
+  const [istTime, setIstTime] = useState('');
   const [roleIndex, setRoleIndex] = useState(0);
+
+  // Live IST Clock
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+      const istString = now.toLocaleTimeString('en-US', {
+        timeZone: 'Asia/Kolkata',
+        hour12: false,
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+      });
+      setIstTime(istString);
+    };
+
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   // Cycle role titles every 3.5 seconds
   useEffect(() => {
@@ -135,6 +155,22 @@ export const Hero: React.FC = () => {
               Let's talk
               <ArrowUpRight size={13} className="inline-block ml-0.5" />
             </a>
+          </div>
+        </div>
+
+        {/* Location & Live Clock Bar */}
+        <div className="hero-meta-location-block">
+          <div className="hero-location-bar">
+            <div className="hero-location-item">
+              <MapPin size={14} className="hero-meta-icon" />
+              <span>Based in Ghaziabad, India · IST (UTC+5:30)</span>
+            </div>
+            {istTime && (
+              <div className="hero-ist-clock-pill">
+                <span className="clock-ping-dot" />
+                <span className="font-mono text-xs">{istTime} IST</span>
+              </div>
+            )}
           </div>
         </div>
 
