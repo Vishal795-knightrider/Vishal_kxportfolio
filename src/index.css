@@ -1006,126 +1006,7 @@ body.dark .visitor-handwritten-sticker {
   transform: translateX(-50%) translateY(0);
 }
 
-/* Retro Mechanical Stamp / Odometer Visitor Counter Strip (matching user photo) */
-.footer-visitor-stamp-wrap {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  cursor: pointer;
-  user-select: none;
-  padding: 8px 12px;
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
 
-.footer-visitor-label {
-  font-family: var(--handwriting, 'Shadows Into Light', 'Caveat', cursive);
-  font-size: 1.55rem;
-  font-weight: 700;
-  color: var(--accent-signature, #6366f1);
-  display: inline-flex;
-  align-items: baseline;
-  gap: 4px;
-  line-height: 1;
-  letter-spacing: 0.02em;
-  transform: rotate(-2deg);
-  transform-origin: right center;
-  transition: transform 0.2s ease, filter 0.2s ease;
-  filter: drop-shadow(0 1px 3px var(--accent-signature-glow));
-}
-
-body.dark .footer-visitor-label {
-  color: var(--accent-signature, #818cf8);
-  filter: drop-shadow(0 2px 8px var(--accent-signature-glow));
-}
-
-.footer-hash-symbol {
-  font-weight: 700;
-  color: inherit;
-  margin-left: 1px;
-}
-
-/* Outer sticker strip containing the digit cells */
-.retro-counter-strip {
-  display: inline-flex;
-  align-items: center;
-  background-color: #72a490; /* Vintage sage teal/green matching user reference photo */
-  border: 2px solid #18181b;
-  border-radius: 4px;
-  overflow: hidden;
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.9), 0 2px 8px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.3);
-  transform: rotate(-1.5deg);
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease;
-}
-
-.footer-visitor-stamp-wrap:hover .retro-counter-strip {
-  transform: rotate(0deg) scale(1.05);
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, 1), 0 4px 16px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.4);
-}
-
-body.dark .retro-counter-strip {
-  border-color: #111111;
-  box-shadow: 0 0 0 2.5px rgba(255, 255, 255, 0.15), 0 4px 14px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-}
-
-body.dark .footer-visitor-stamp-wrap:hover .retro-counter-strip {
-  box-shadow: 0 0 0 2.5px rgba(255, 255, 255, 0.25), 0 6px 20px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.3);
-}
-
-/* Individual digit cell */
-.retro-counter-cell {
-  width: 24px;
-  height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-right: 1.8px solid #18181b;
-  background-color: #72a490;
-  position: relative;
-}
-
-.retro-counter-cell:last-child {
-  border-right: none;
-}
-
-body.dark .retro-counter-cell {
-  border-right-color: #111111;
-}
-
-/* Handwritten / rounded white number inside cell */
-.retro-digit-char {
-  font-family: var(--handwriting, 'Architects Daughter', 'Caveat', cursive);
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: #ffffff;
-  line-height: 1;
-  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
-  display: inline-block;
-  transform: translateY(-0.5px);
-  user-select: none;
-}
-
-.visitor-toast {
-  position: absolute;
-  top: -28px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--text-primary);
-  color: var(--bg);
-  font-family: var(--sans);
-  font-size: 0.75rem;
-  font-weight: 600;
-  padding: 2px 8px;
-  border-radius: 9999px;
-  white-space: nowrap;
-  box-shadow: var(--shadow-md);
-  animation: toast-pop 0.25s ease-out;
-}
-
-@keyframes toast-pop {
-  0% { opacity: 0; transform: translateX(-50%) translateY(4px) scale(0.9); }
-  100% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
-}
 
 /* ==========================================================================
    ABOUT SECTION
@@ -2511,201 +2392,319 @@ body.dark .contact-pill-animated:hover {
 }
 
 /* ==========================================================================
-   FOOTER (Matches user image 1 layout: 1. You are visitor, 2. Open to..., 3. Designed...)
-   Reduced gap above to eliminate empty space where lines were drawn
+   FOOTER (Mechanical Odometer / Stamp Visitor Counter Strip)
    ========================================================================== */
 
 .site-footer {
-  margin-top: 14px;
-  padding: 18px 0 32px;
+  margin-top: 48px;
+  padding: 32px 0 40px;
   border-top: 1px solid var(--border);
   position: relative;
   z-index: 2;
+  overflow: visible;
 }
 
 .footer-container-clean {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 16px;
   max-width: var(--container-width);
   margin: 0 auto;
   text-align: center;
+  overflow: visible;
 }
 
-/* Row 1: Centered Visitor Counter (Clean text, no box) */
+/* Row 1: Centered Mechanical Stamp / Odometer Visitor Counter Strip */
 .footer-visitor-row {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  overflow: visible;
+  padding: 6px 0;
 }
 
-.footer-visitor-clean-btn {
+.footer-visitor-stamp-wrap {
   position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 4px 12px;
-  border-radius: var(--radius-full);
-  color: var(--text-muted);
+  gap: 12px;
   cursor: pointer;
-  outline: none;
-  font-family: var(--mono);
-  font-size: 0.82rem;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-
-  /* Apple frosted glass (Dark mode default) */
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.09);
+  user-select: none;
+  padding: 4px 6px;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: visible;
 }
 
-.footer-visitor-clean-btn:hover {
-  color: var(--text-primary);
-  background: rgba(255, 255, 255, 0.10);
-  border-color: rgba(255, 255, 255, 0.22);
-  transform: translateY(-1.5px) scale(1.02);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.16);
+.footer-visitor-stamp-wrap:hover {
+  background: transparent;
+  border: none;
+  transform: translateY(-2px);
+  box-shadow: none;
 }
 
-body.light .footer-visitor-clean-btn {
-  background: rgba(255, 255, 255, 0.68);
-  border: 1px solid rgba(0, 0, 0, 0.09);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03), inset 0 1px 0 rgba(255, 255, 255, 0.85);
-  color: var(--text-muted);
+body.dark .footer-visitor-stamp-wrap {
+  background: transparent;
+  border: none;
+  box-shadow: none;
 }
 
-body.light .footer-visitor-clean-btn:hover {
-  color: var(--text-primary);
-  background: rgba(255, 255, 255, 0.88);
-  border-color: rgba(0, 0, 0, 0.14);
-  transform: translateY(-1.5px) scale(1.02);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+body.dark .footer-visitor-stamp-wrap:hover {
+  border: none;
+  box-shadow: none;
 }
 
-.footer-visitor-clean-label {
-  color: var(--text-muted);
-}
-
-.footer-visitor-clean-num {
+/* Label: "you are visitor #" */
+.footer-visitor-label {
+  font-family: 'Caveat', 'Kalam', cursive, sans-serif;
+  font-size: 1.45rem;
   font-weight: 700;
-  color: var(--text-primary);
-  font-variant-numeric: tabular-nums;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+  color: var(--accent-signature, #6366f1);
+  display: inline-flex;
+  align-items: baseline;
+  gap: 3px;
+  transition: color 0.2s ease, filter 0.2s ease;
+  filter: drop-shadow(0 1px 2px var(--accent-signature-glow));
 }
 
+body.dark .footer-visitor-label {
+  color: var(--accent-signature, #818cf8);
+  filter: drop-shadow(0 2px 8px var(--accent-signature-glow));
+}
+
+.footer-hash-symbol {
+  font-weight: 700;
+  color: inherit;
+  margin-left: 2px;
+}
+
+/* Outer mechanical counter strip containing the digit cells */
+.retro-counter-strip {
+  display: inline-flex;
+  align-items: center;
+  background-color: #6fa08d;
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.22) 0%, transparent 60%);
+  border: 2px solid #18181b;
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.95), 0 2px 8px rgba(0, 0, 0, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  transform: rotate(-1.5deg);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+}
+
+.footer-visitor-stamp-wrap:hover .retro-counter-strip {
+  transform: rotate(0deg) scale(1.05);
+  box-shadow: 0 0 0 3px #ffffff, 0 4px 16px rgba(0, 0, 0, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+body.dark .retro-counter-strip {
+  border-color: #000000;
+  box-shadow: 0 0 0 2.5px rgba(255, 255, 255, 0.15), 0 4px 14px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+body.dark .footer-visitor-stamp-wrap:hover .retro-counter-strip {
+  box-shadow: 0 0 0 2.5px rgba(255, 255, 255, 0.28), 0 6px 20px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* Individual digit cell */
+.retro-counter-cell {
+  width: 25px;
+  height: 31px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 1.8px solid #18181b;
+  background-color: #6fa08d;
+  position: relative;
+}
+
+.retro-counter-cell:last-child {
+  border-right: none;
+}
+
+body.dark .retro-counter-cell {
+  border-right-color: #000000;
+}
+
+/* Crisp rounded white digit inside cell */
+.retro-digit-char {
+  font-family: var(--mono, 'JetBrains Mono', monospace);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+  display: inline-block;
+  user-select: none;
+}
+
+/* Toast popup on celebrate click */
 .visitor-toast {
   position: absolute;
-  bottom: calc(100% + 6px);
+  top: -34px;
   left: 50%;
   transform: translateX(-50%);
   background: var(--text-primary);
   color: var(--bg);
-  font-size: 0.72rem;
   font-family: var(--sans);
+  font-size: 0.76rem;
   font-weight: 600;
-  padding: 3px 8px;
-  border-radius: 4px;
+  padding: 4px 10px;
+  border-radius: 9999px;
   white-space: nowrap;
-  pointer-events: none;
-  box-shadow: var(--shadow-sm);
-  animation: toast-pop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: var(--shadow-md);
+  animation: toast-pop 0.25s ease-out;
+  z-index: 10;
 }
 
-@keyframes toast-pop {
-  from { opacity: 0; transform: translate(-50%, 6px) scale(0.9); }
-  to { opacity: 1; transform: translate(-50%, 0) scale(1); }
-}
-
-/* Row 2: Status & Credits with tight spacing and no wide gap */
-.footer-text-row {
-  display: flex;
+/* Row 2: Elevated Bottom Meta Bar - Centered and cohesive without gap */
+.footer-meta-bar {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 10px;
-  font-size: 0.82rem;
-  color: var(--text-secondary);
+  gap: 14px;
+  padding: 2px 0 0;
 }
 
-.footer-status-group {
+/* Status Availability Chip with Live Pulsing Beacon */
+.footer-availability-chip {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  background: rgba(22, 163, 74, 0.08);
+  border: 1px solid rgba(22, 163, 74, 0.24);
+  transition: all 0.2s ease;
 }
 
-.footer-live-dot {
+.footer-availability-chip:hover {
+  background: rgba(22, 163, 74, 0.14);
+  border-color: rgba(22, 163, 74, 0.38);
+}
+
+body.dark .footer-availability-chip {
+  background: rgba(34, 197, 94, 0.08);
+  border-color: rgba(34, 197, 94, 0.22);
+}
+
+body.dark .footer-availability-chip:hover {
+  background: rgba(34, 197, 94, 0.14);
+  border-color: rgba(34, 197, 94, 0.38);
+}
+
+.footer-live-beacon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 8px;
+  height: 8px;
+}
+
+.footer-beacon-ping {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: #16a34a;
+  opacity: 0.75;
+  animation: beacon-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.footer-beacon-dot {
+  position: relative;
   width: 7px;
   height: 7px;
   border-radius: 50%;
   background: #16a34a;
-  box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.7);
-  animation: dot-pulse 2s infinite ease-out;
 }
 
-@keyframes dot-pulse {
-  0% {
-    box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.7);
-  }
-  70% {
-    box-shadow: 0 0 0 7px rgba(22, 163, 74, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(22, 163, 74, 0);
+body.dark .footer-beacon-ping,
+body.dark .footer-beacon-dot {
+  background: #22c55e;
+}
+
+@keyframes beacon-ping {
+  75%, 100% {
+    transform: scale(2.4);
+    opacity: 0;
   }
 }
 
-.footer-live-text {
-  color: var(--text-secondary);
-  font-weight: 450;
+.footer-availability-label {
+  font-family: var(--sans);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: #15803d;
 }
 
-.footer-sep-dash {
-  color: var(--text-muted);
-  font-size: 0.8rem;
+body.dark .footer-availability-label {
+  color: #86efac;
 }
 
-.footer-year {
-  color: var(--text-muted);
-  font-family: var(--mono);
-  font-size: 0.78rem;
-}
-
-.footer-mid-sep {
-  color: var(--text-muted);
-  font-size: 0.8rem;
-}
-
-.footer-credits-group {
+/* Editorial Colophon & Credits */
+.footer-colophon {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 10px;
+  font-family: var(--sans);
+  font-size: 0.8125rem;
+  letter-spacing: -0.01em;
   color: var(--text-muted);
 }
 
-.footer-credits-group .footer-author-link {
+.footer-colophon-credits {
+  color: var(--text-secondary);
+}
+
+.footer-author-brand {
   font-weight: 600;
   color: var(--text-primary);
   text-decoration: none;
   border-bottom: 1px dotted var(--border-hover);
-  transition: color 0.15s ease, border-bottom-color 0.15s ease;
+  transition: all 0.2s ease;
+  padding-bottom: 1px;
 }
 
-.footer-credits-group .footer-author-link:hover {
-  color: var(--text-primary);
-  border-bottom-color: var(--text-primary);
+.footer-author-brand:hover {
+  color: var(--accent-signature, #6366f1);
+  border-bottom-color: var(--accent-signature, #6366f1);
+}
+
+.footer-colophon-bullet {
+  color: var(--text-dim);
+  font-size: 0.85rem;
+  user-select: none;
+}
+
+.footer-colophon-year {
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  font-weight: 450;
 }
 
 @media (max-width: 640px) {
-  .footer-text-row {
+  .footer-meta-bar {
     flex-direction: column;
-    gap: 6px;
+    align-items: center;
+    gap: 12px;
+    text-align: center;
   }
-  .footer-mid-sep {
-    display: none;
+
+  .footer-colophon {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
   }
 }
 
