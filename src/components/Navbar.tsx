@@ -25,7 +25,11 @@ export const Navbar: React.FC<NavbarProps> = ({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const isTransitioningRef = React.useRef(false);
+
   const handleToggleTheme = (event: React.MouseEvent<HTMLButtonElement>) => {
+    if (isTransitioningRef.current) return;
+
     // Check if browser supports modern View Transitions API
     const isAppearanceTransition =
       // @ts-ignore
@@ -39,8 +43,12 @@ export const Navbar: React.FC<NavbarProps> = ({
       return;
     }
 
-    const x = event.clientX;
-    const y = event.clientY;
+    isTransitioningRef.current = true;
+
+    // Robust coordinates for touch taps: fall back to button center if clientX/clientY are 0 or missing
+    const rect = event.currentTarget.getBoundingClientRect();
+    const x = event.clientX && event.clientX > 0 ? event.clientX : rect.left + rect.width / 2;
+    const y = event.clientY && event.clientY > 0 ? event.clientY : rect.top + rect.height / 2;
     const endRadius = Math.hypot(
       Math.max(x, window.innerWidth - x),
       Math.max(y, window.innerHeight - y)
@@ -49,46 +57,56 @@ export const Navbar: React.FC<NavbarProps> = ({
     const goingDark = isLight;
     document.documentElement.dataset.themeTransition = goingDark ? 'to-dark' : 'to-light';
 
-    // @ts-ignore
-    const transition = document.startViewTransition(() => {
-      flushSync(() => {
-        const next = !isLight;
-        setIsLight(next);
-        if (next) {
-          document.documentElement.classList.add('light');
-          document.documentElement.classList.remove('dark');
-          document.body.classList.add('light');
-          document.body.classList.remove('dark');
-        } else {
-          document.documentElement.classList.add('dark');
-          document.documentElement.classList.remove('light');
-          document.body.classList.add('dark');
-          document.body.classList.remove('light');
-        }
+    try {
+      // @ts-ignore
+      const transition = document.startViewTransition(() => {
+        flushSync(() => {
+          const next = !isLight;
+          setIsLight(next);
+          if (next) {
+            document.documentElement.classList.add('light');
+            document.documentElement.classList.remove('dark');
+            document.body.classList.add('light');
+            document.body.classList.remove('dark');
+          } else {
+            document.documentElement.classList.add('dark');
+            document.documentElement.classList.remove('light');
+            document.body.classList.add('dark');
+            document.body.classList.remove('light');
+          }
+        });
       });
-    });
 
-    transition.ready.then(() => {
-      const clipPath = [
-        `circle(0px at ${x}px ${y}px)`,
-        `circle(${endRadius}px at ${x}px ${y}px)`
-      ];
+      transition.ready
+        .then(() => {
+          const clipPath = [
+            `circle(0px at ${x}px ${y}px)`,
+            `circle(${endRadius}px at ${x}px ${y}px)`
+          ];
 
-      document.documentElement.animate(
-        {
-          clipPath: goingDark ? clipPath : [...clipPath].reverse()
-        },
-        {
-          duration: 400,
-          easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
-          pseudoElement: goingDark ? '::view-transition-new(root)' : '::view-transition-old(root)'
-        }
-      );
-    });
+          const anim = document.documentElement.animate(
+            {
+              clipPath: goingDark ? clipPath : [...clipPath].reverse()
+            },
+            {
+              duration: 380,
+              easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+              fill: 'forwards',
+              pseudoElement: goingDark ? '::view-transition-new(root)' : '::view-transition-old(root)'
+            }
+          );
 
-    transition.finished.finally(() => {
+          return Promise.allSettled([anim.finished, transition.finished]);
+        })
+        .finally(() => {
+          delete document.documentElement.dataset.themeTransition;
+          isTransitioningRef.current = false;
+        });
+    } catch {
+      setIsLight(!isLight);
       delete document.documentElement.dataset.themeTransition;
-    });
+      isTransitioningRef.current = false;
+    }
   };
 
   return (

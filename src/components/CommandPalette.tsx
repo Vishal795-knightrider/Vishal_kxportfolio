@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { flushSync } from 'react-dom';
 import { Search, FolderGit2, Briefcase, Code, GraduationCap, Award, Mail, ExternalLink, Moon, Sun, ArrowRight } from 'lucide-react';
 
 interface CommandPaletteProps {
@@ -80,25 +81,57 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
         const x = window.innerWidth / 2;
         const y = window.innerHeight / 2;
         const endRadius = Math.hypot(x, y);
-        // @ts-ignore
-        const transition = document.startViewTransition(() => {
-          setIsLight(!isLight);
-        });
-        transition.ready.then(() => {
-          document.documentElement.animate(
-            {
-              clipPath: [
+        const goingDark = isLight;
+        document.documentElement.dataset.themeTransition = goingDark ? 'to-dark' : 'to-light';
+
+        try {
+          // @ts-ignore
+          const transition = document.startViewTransition(() => {
+            flushSync(() => {
+              const next = !isLight;
+              setIsLight(next);
+              if (next) {
+                document.documentElement.classList.add('light');
+                document.documentElement.classList.remove('dark');
+                document.body.classList.add('light');
+                document.body.classList.remove('dark');
+              } else {
+                document.documentElement.classList.add('dark');
+                document.documentElement.classList.remove('light');
+                document.body.classList.add('dark');
+                document.body.classList.remove('light');
+              }
+            });
+          });
+
+          transition.ready
+            .then(() => {
+              const clipPath = [
                 `circle(0px at ${x}px ${y}px)`,
                 `circle(${endRadius}px at ${x}px ${y}px)`
-              ]
-            },
-            {
-              duration: 520,
-              easing: 'cubic-bezier(0.25, 1, 0.5, 1)',
-              pseudoElement: '::view-transition-new(root)'
-            }
-          );
-        });
+              ];
+
+              const anim = document.documentElement.animate(
+                {
+                  clipPath: goingDark ? clipPath : [...clipPath].reverse()
+                },
+                {
+                  duration: 380,
+                  easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+                  fill: 'forwards',
+                  pseudoElement: goingDark ? '::view-transition-new(root)' : '::view-transition-old(root)'
+                }
+              );
+
+              return Promise.allSettled([anim.finished, transition.finished]);
+            })
+            .finally(() => {
+              delete document.documentElement.dataset.themeTransition;
+            });
+        } catch {
+          setIsLight(!isLight);
+          delete document.documentElement.dataset.themeTransition;
+        }
       } else {
         setIsLight(!isLight);
       }

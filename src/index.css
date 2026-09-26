@@ -106,11 +106,31 @@ body.dark {
    VIEW TRANSITIONS API FOR THEME TOGGLE (vinitpatil.me circular ripple wipe)
    ========================================================================== */
 
+::view-transition-image-pair(root) {
+  isolation: isolate;
+}
+
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation: none;
   mix-blend-mode: normal;
-  will-change: clip-path;
+  display: block;
+}
+
+/* Isolate navbar completely from root snapshot to prevent mobile address-bar shift */
+.nav-outer {
+  view-transition-name: main-navbar;
+}
+
+::view-transition-group(main-navbar) {
+  z-index: 100000;
+  animation: none;
+}
+
+::view-transition-old(main-navbar),
+::view-transition-new(main-navbar) {
+  animation: none;
+  mix-blend-mode: normal;
 }
 
 /* Light to Dark: New Dark screen expands on top */
@@ -147,6 +167,8 @@ html[data-theme-transition] *::after {
 }
 
 html {
+  background-color: var(--bg);
+  overflow-x: hidden;
   scroll-behavior: smooth;
   scroll-padding-top: 80px;
   scrollbar-width: none; /* Firefox */
@@ -162,6 +184,7 @@ body::-webkit-scrollbar {
 
 body {
   background-color: var(--bg);
+  overflow-x: hidden;
   color: var(--text-primary);
   font-family: var(--sans);
   line-height: 1.6;
@@ -335,7 +358,6 @@ img {
   display: flex;
   justify-content: center;
   pointer-events: none;
-  transition: transform 0.2s ease;
 }
 
 .nav-container {
@@ -353,7 +375,7 @@ img {
   align-items: center;
   gap: 22px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.03);
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 body.dark .nav-container {
@@ -462,19 +484,36 @@ body.dark .nav-container--scrolled {
 }
 
 @media (max-width: 640px) {
+  .nav-outer {
+    padding: 0 12px;
+  }
   .nav-container {
-    padding: 6px 10px 6px 16px;
-    gap: 12px;
+    width: 100%;
+    max-width: 100%;
+    justify-content: space-between;
+    padding: 6px 8px 6px 14px;
+    gap: 8px;
   }
   .nav-links-desktop {
     display: none;
   }
+  .nav-actions {
+    gap: 4px;
+  }
+  .nav-icon-action-btn {
+    flex-shrink: 0;
+  }
   .nav-get-in-touch-btn {
-    padding: 6px 14px;
-    font-size: 0.82rem;
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    flex-shrink: 0;
   }
   .nav-mobile-toggle {
     display: inline-flex;
+    flex-shrink: 0;
+  }
+  .brand-logo {
+    flex-shrink: 0;
   }
 }
 
